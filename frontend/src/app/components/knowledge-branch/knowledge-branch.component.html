@@ -1,0 +1,54 @@
+<div class="data-table">
+  <div class="table-top">
+    <!-- Filter -->
+    <mat-form-field appearance="standard" style="width: 300px">
+      <mat-label>Пошук</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Пошук" #input>
+    </mat-form-field>
+    <!-- Create Button -->
+    <div class="create-button">
+      <button mat-stroked-button color="primary">Створити</button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Code Column -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Шифр галузі</th>
+        <td mat-cell *matCellDef="let element">{{element.code}}</td>
+      </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Галузь знань</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+      <!-- Details Column -->
+      <ng-container matColumnDef="details" >
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" align="right">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="icon-gray">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <span>Редагувати</span>
+            </button>
+            <button mat-menu-item>
+              <span>Видалити</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Немає даних, що відповідають фільтру "{{input.value}}"</td>
+      </tr>
+    </table>
+    <!-- Paginator -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 15, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>

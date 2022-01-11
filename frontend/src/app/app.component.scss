@@ -1,0 +1,28 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  &-logo {}
+
+  &-nav {
+    ul {
+      display: flex;
+      list-style: none;
+
+      li {
+        margin-left: 10px;
+
+        a {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}
+
+.container {
+  max-width: 1170px;
+  margin: 50px auto 0;
+  padding: 0 20px;
+}
