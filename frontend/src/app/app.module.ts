@@ -22,6 +22,15 @@ import {KnowledgeBranchAddEditComponent} from './components/knowledge-branch/kno
 import {DialogConfirmComponent} from './shared/dialog-confirm/dialog-confirm.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatOptionModule} from '@angular/material/core';
+import { SpecialityAddEditComponent } from './components/speciality/speciality-add-edit/speciality-add-edit.component';
+import { TeachersComponent } from './components/teachers/teachers.component';
+import { HeadsComponent } from './components/heads/heads.component';
+import { GuarantorsComponent } from './components/guarantors/guarantors.component';
+import { SubjectsComponent } from './components/subjects/subjects.component';
+import { SyllabusesComponent } from './components/syllabuses/syllabuses.component';
+import { LoadsComponent } from './components/loads/loads.component';
 
 
 @NgModule({
@@ -31,7 +40,14 @@ import {MatCardModule} from '@angular/material/card';
     KnowledgeBranchComponent,
     SpecialityComponent,
     KnowledgeBranchAddEditComponent,
-    DialogConfirmComponent
+    DialogConfirmComponent,
+    SpecialityAddEditComponent,
+    TeachersComponent,
+    HeadsComponent,
+    GuarantorsComponent,
+    SubjectsComponent,
+    SyllabusesComponent,
+    LoadsComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +67,9 @@ import {MatCardModule} from '@angular/material/card';
     MatMenuModule,
     MatDialogModule,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatOptionModule
   ],
   providers: [
     {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}
