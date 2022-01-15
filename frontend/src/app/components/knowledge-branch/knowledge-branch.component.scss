@@ -1,0 +1,29 @@
+.data-table {
+  .table-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .create-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .mat-column-code {
+    width: 20%;
+  }
+
+  .icon-gray {
+    color: #7c7c7c;
+  }
+}

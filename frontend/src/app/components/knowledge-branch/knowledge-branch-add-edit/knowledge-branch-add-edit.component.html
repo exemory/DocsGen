@@ -1,0 +1,22 @@
+<form class="card" [formGroup]="form">
+  <div class="card-title">
+    <h1 *ngIf="isAddMode">Додати нову галузь знань</h1>
+    <h1 *ngIf="!isAddMode">Редагувати галузь знань</h1>
+    <button mat-button color="accent" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon> Повернутися</button>
+  </div>
+
+  <mat-form-field appearance="outline" class="card-input">
+    <mat-label>Шифр галузі</mat-label>
+    <input matInput placeholder="Шифр галузі" formControlName="code">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="card-input">
+    <mat-label>Назва галузі</mat-label>
+    <input matInput placeholder="Назва галузі" formControlName="name">
+  </mat-form-field>
+
+  <button *ngIf="isAddMode" mat-raised-button color="primary"
+          class="card-button" (click)="create()" [disabled]="!form.valid">Додати</button>
+  <button *ngIf="!isAddMode" mat-raised-button color="primary"
+          class="card-button" (click)="edit()" [disabled]="!form.valid">Редагувати</button>
+</form>

@@ -1,0 +1,41 @@
+<div class="page">
+  <div class="toolbar">
+    <nav class="toolbar-nav">
+      <h1>DocsGen</h1>
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]={exact:true}>
+          <mat-icon fontSet="material-icons-outlined">cottage</mat-icon>
+          Головна</a>
+        </li>
+        <li><a routerLink="/knowledgebranch" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">account_balance</mat-icon>
+          Галузь знань</a></li>
+        <li><a routerLink="/speciality" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">school</mat-icon>
+          Спеціальність</a></li>
+        <li><a routerLink="/teachers" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">group</mat-icon>
+          Викладачі</a></li>
+        <li><a routerLink="/heads" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
+          Голови</a></li>
+        <li><a routerLink="/guarantors" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">how_to_reg</mat-icon>
+          Гаранти</a></li>
+        <li><a routerLink="/subjects" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">library_books</mat-icon>
+          Предмети</a></li>
+        <li><a routerLink="/syllabuses" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">dashboard</mat-icon>
+          Программа</a></li>
+        <li><a routerLink="/loads" routerLinkActive="active-link">
+          <mat-icon fontSet="material-icons-outlined">space_dashboard</mat-icon>
+          Завантаження</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
