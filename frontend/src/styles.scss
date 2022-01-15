@@ -6,4 +6,73 @@
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #f9faff;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+
+  h1 {
+    font-weight: 500;
+    margin: 0;
+    color: #333333;
+    font-size: 28px;
+  }
+}
+
+.search-input {
+  width: 100%;
+  position: relative;
+
+  mat-icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 21px;
+    color: #727272;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    background: #f9faff;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #727272;
+  }
+}
+
+.select-input {
+  width: 100%;
+  position: relative;
+
+  button {
+    position: absolute;
+    top: -2px;
+    right: 8px;
+
+    span {
+      mat-icon {
+        font-size: 21px;
+        color: #727272;
+        cursor: pointer;
+      }
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    background: #f9faff;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #727272;
+  }
 }

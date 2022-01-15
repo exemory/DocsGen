@@ -1,12 +1,25 @@
 <div class="data-table">
-  <!-- Select -->
-  <div class="select">
-    <mat-form-field appearance="outline">
-      <mat-label>Оберіть галузь знань</mat-label>
+  <div class="page-header">
+    <h1>Спеціальність</h1>
+    <!-- Create Button -->
+    <div class="create-button">
+      <button mat-raised-button (click)="create()">
+        <span>Додати нову</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-top">
+    <!-- Filter -->
+    <div class="search-input">
+      <mat-icon>search</mat-icon>
+      <input (keyup)="applyFilter($event)" placeholder="Пошук" #input>
+    </div>
+
+    <!-- Select -->
+    <div class="select-input">
       <input type="text"
-             placeholder="Галузь знань"
-             aria-label="KnowledgeBranch select"
-             matInput
+             placeholder="Оберіть галузь знань"
              [formControl]="selectedBranch"
              [matAutocomplete]="auto">
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -18,25 +31,11 @@
       <button *ngIf="selectedBranch" matSuffix mat-icon-button aria-label="Clear" (click)="selectedBranch.reset('')">
         <mat-icon>close</mat-icon>
       </button>
-    </mat-form-field>
-  </div>
-
-  <div class="table-top">
-    <!-- Filter -->
-    <mat-form-field appearance="standard" style="width: 300px">
-      <mat-label>Пошук</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Пошук" #input>
-    </mat-form-field>
-    <!-- Create Button -->
-    <div class="create-button">
-      <button mat-stroked-button color="primary" (click)="create()">
-        <span>Додати нову</span>
-      </button>
     </div>
   </div>
 
   <!-- Table -->
-  <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8" style="box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- Code Column -->
       <ng-container matColumnDef="code">

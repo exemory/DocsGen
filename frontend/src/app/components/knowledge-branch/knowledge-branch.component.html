@@ -1,20 +1,24 @@
 <div class="data-table">
-  <div class="table-top">
-    <!-- Filter -->
-    <mat-form-field appearance="standard" style="width: 300px">
-      <mat-label>Пошук</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Пошук" #input>
-    </mat-form-field>
+  <div class="page-header">
+    <h1>Галузь знань</h1>
     <!-- Create Button -->
     <div class="create-button">
-      <button mat-stroked-button color="primary" (click)="create()">
+      <button mat-raised-button (click)="create()">
         <span>Додати нову</span>
       </button>
     </div>
   </div>
 
+  <div class="table-top">
+    <!-- Filter -->
+    <div class="search-input">
+      <mat-icon>search</mat-icon>
+      <input (keyup)="applyFilter($event)" placeholder="Пошук" #input>
+    </div>
+  </div>
+
   <!-- Table -->
-  <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8" style="box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- Code Column -->
       <ng-container matColumnDef="code">

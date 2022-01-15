@@ -1,26 +1,31 @@
 .data-table {
   .table-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
 
   .create-button {
-    display: flex;
-    justify-content: flex-end;
+    button {
+      background: #4758e4;
+      color: #ffffff;
+      width: 130px;
+    }
   }
 
   table {
     width: 100%;
+    border-radius: 5px;
   }
 
   .mat-form-field {
     font-size: 14px;
     width: 100%;
-  }
-
-  .mat-column-code {
-    width: 20%;
   }
 
   .icon-gray {
