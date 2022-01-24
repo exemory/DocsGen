@@ -1,22 +1,31 @@
-<form class="card" [formGroup]="form">
-  <div class="card-title">
-    <h1 *ngIf="isAddMode">Додати нову галузь знань</h1>
+<form class="form" [formGroup]="form">
+  <div class="page-header">
+    <h1 *ngIf="isAddMode">Додати галузь знань</h1>
     <h1 *ngIf="!isAddMode">Редагувати галузь знань</h1>
-    <button mat-button color="accent" (click)="goBack()"><mat-icon>keyboard_backspace</mat-icon> Повернутися</button>
+    <button mat-button color="accent" (click)="goBack()">
+      <mat-icon>keyboard_backspace</mat-icon>
+      Повернутися
+    </button>
   </div>
 
-  <mat-form-field appearance="outline" class="card-input">
-    <mat-label>Шифр галузі</mat-label>
-    <input matInput placeholder="Шифр галузі" formControlName="code">
-  </mat-form-field>
+  <div class="form-fields">
+    <mat-form-field appearance="outline" class="card-input">
+      <mat-label>Шифр галузі</mat-label>
+      <input matInput placeholder="Шифр галузі" formControlName="code">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="card-input">
-    <mat-label>Назва галузі</mat-label>
-    <input matInput placeholder="Назва галузі" formControlName="name">
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="card-input">
+      <mat-label>Назва галузі</mat-label>
+      <input matInput placeholder="Назва галузі" formControlName="name">
+    </mat-form-field>
+  </div>
 
-  <button *ngIf="isAddMode" mat-raised-button color="primary"
-          class="card-button" (click)="create()" [disabled]="!form.valid">Додати</button>
-  <button *ngIf="!isAddMode" mat-raised-button color="primary"
-          class="card-button" (click)="edit()" [disabled]="!form.valid">Редагувати</button>
+  <div class="form-button">
+    <button *ngIf="isAddMode" mat-raised-button color="primary" (click)="create()">
+      Додати
+    </button>
+    <button *ngIf="!isAddMode" mat-raised-button color="primary" (click)="edit()">
+      Редагувати
+    </button>
+  </div>
 </form>

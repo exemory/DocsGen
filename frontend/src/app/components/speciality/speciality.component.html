@@ -1,14 +1,14 @@
-<div class="data-table">
-  <div class="page-header">
-    <h1>Спеціальність</h1>
-    <!-- Create Button -->
-    <div class="create-button">
-      <button mat-raised-button (click)="create()">
-        <span>Додати нову</span>
-      </button>
-    </div>
+<div class="page-header">
+  <h1>Спеціальність</h1>
+  <!-- Create Button -->
+  <div class="create-button">
+    <button mat-raised-button (click)="create()">
+      <span>Додати нову</span>
+    </button>
   </div>
+</div>
 
+<div class="data-table">
   <div class="table-top">
     <!-- Filter -->
     <div class="search-input">
@@ -57,7 +57,7 @@
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="edit(element.code)"
                     style="line-height: 35px;height: 35px; display: flex; align-items: center;">
-              <mat-icon style="margin-right: 5px">edit_note</mat-icon>
+              <mat-icon style="margin-right: 5px">crop</mat-icon>
               <span>Редагувати</span>
             </button>
             <button mat-menu-item (click)="remove(element.code)"

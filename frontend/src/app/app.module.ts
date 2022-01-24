@@ -24,13 +24,14 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatOptionModule} from '@angular/material/core';
-import { SpecialityAddEditComponent } from './components/speciality/speciality-add-edit/speciality-add-edit.component';
-import { TeachersComponent } from './components/teachers/teachers.component';
-import { HeadsComponent } from './components/heads/heads.component';
-import { GuarantorsComponent } from './components/guarantors/guarantors.component';
-import { SubjectsComponent } from './components/subjects/subjects.component';
-import { SyllabusesComponent } from './components/syllabuses/syllabuses.component';
-import { LoadsComponent } from './components/loads/loads.component';
+import {SpecialityAddEditComponent} from './components/speciality/speciality-add-edit/speciality-add-edit.component';
+import {TeachersComponent} from './components/teachers/teachers.component';
+import {HeadsComponent} from './components/heads/heads.component';
+import {GuarantorsComponent} from './components/guarantors/guarantors.component';
+import {SubjectsComponent} from './components/subjects/subjects.component';
+import {SyllabusesComponent} from './components/syllabuses/syllabuses.component';
+import {LoadsComponent} from './components/loads/loads.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { LoadsComponent } from './components/loads/loads.component';
     MatCardModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSidenavModule
   ],
   providers: [
     {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}

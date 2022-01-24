@@ -1,20 +1,20 @@
-.card {
+.form {
   margin: 0 auto;
-  max-width: 600px;
+  background: #ffffff;
+  max-width: 660px;
+  padding: 30px 40px;
+  border-radius: 5px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-  &-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-
+  .page-header {
     h1 {
-      font-weight: 500;
-      color: #333333;
-      margin: 0;
+      font-size: 24px;
     }
+  }
 
-    button {}
+  &-fields {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   &-input {
@@ -22,6 +22,13 @@
   }
 
   &-button {
-    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      width: 130px;
+      background: #4758e4;
+      color: #ffffff;
+    }
   }
 }

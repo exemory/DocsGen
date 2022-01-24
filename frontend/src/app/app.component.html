@@ -1,39 +1,55 @@
-<div class="page">
-  <div class="toolbar">
-    <nav class="toolbar-nav">
-      <h1>DocsGen</h1>
-      <ul>
-        <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]={exact:true}>
-          <mat-icon fontSet="material-icons-outlined">cottage</mat-icon>
-          Головна</a>
-        </li>
-        <li><a routerLink="/knowledgebranch" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">account_balance</mat-icon>
-          Галузь знань</a></li>
-        <li><a routerLink="/speciality" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">school</mat-icon>
-          Спеціальність</a></li>
-        <li><a routerLink="/teachers" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">group</mat-icon>
-          Викладачі</a></li>
-        <li><a routerLink="/heads" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
-          Голови</a></li>
-        <li><a routerLink="/guarantors" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">how_to_reg</mat-icon>
-          Гаранти</a></li>
-        <li><a routerLink="/subjects" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">library_books</mat-icon>
-          Предмети</a></li>
-        <li><a routerLink="/syllabuses" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">dashboard</mat-icon>
-          Программа</a></li>
-        <li><a routerLink="/loads" routerLinkActive="active-link">
-          <mat-icon fontSet="material-icons-outlined">space_dashboard</mat-icon>
-          Завантаження</a></li>
-      </ul>
-    </nav>
-  </div>
+<div class="page" [ngClass]="isNavLarge ? '' : 'nav-small'">
+  <nav class="nav">
+    <div>
+      <span>DocsGen</span>
+      <div class="collapse-icon" (click)="isNavLarge = !isNavLarge">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             id="mdi-arrow-collapse-left" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="#f2f2f2"
+                d="M11.92,19.92L4,12L11.92,4.08L13.33,5.5L7.83,11H22V13H7.83L13.34,18.5L11.92,19.92M4,12V2H2V22H4V12Z"/>
+        </svg>
+      </div>
+    </div>
+
+    <ul>
+      <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]={exact:true}>
+        <mat-icon fontSet="material-icons-outlined">cottage</mat-icon>
+        <span>Головна</span>
+      </a></li>
+      <li><a routerLink="/knowledgebranch" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">account_balance</mat-icon>
+        <span>Галузь&nbsp;знань</span>
+      </a></li>
+      <li><a routerLink="/speciality" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">school</mat-icon>
+        <span>Спеціальність</span>
+      </a></li>
+      <li><a routerLink="/teachers" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">group</mat-icon>
+        <span>Викладачі</span>
+      </a></li>
+      <li><a routerLink="/heads" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
+        <span>Голови</span>
+      </a></li>
+      <li><a routerLink="/guarantors" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">how_to_reg</mat-icon>
+        <span>Гаранти</span>
+      </a></li>
+      <li><a routerLink="/subjects" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">library_books</mat-icon>
+        <span>Предмети</span>
+      </a></li>
+      <li><a routerLink="/syllabuses" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">dashboard</mat-icon>
+        <span>Программа</span>
+      </a></li>
+      <li><a routerLink="/loads" routerLinkActive="active-link">
+        <mat-icon fontSet="material-icons-outlined">space_dashboard</mat-icon>
+        <span>Завантаження</span>
+      </a></li>
+    </ul>
+  </nav>
 
   <div class="container">
     <router-outlet></router-outlet>

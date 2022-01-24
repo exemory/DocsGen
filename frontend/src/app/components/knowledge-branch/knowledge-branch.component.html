@@ -1,14 +1,14 @@
-<div class="data-table">
-  <div class="page-header">
-    <h1>Галузь знань</h1>
-    <!-- Create Button -->
-    <div class="create-button">
-      <button mat-raised-button (click)="create()">
-        <span>Додати нову</span>
-      </button>
-    </div>
+<div class="page-header">
+  <h1>Галузь знань</h1>
+  <!-- Create Button -->
+  <div class="create-button">
+    <button mat-raised-button (click)="create()">
+      <span>Додати нову</span>
+    </button>
   </div>
+</div>
 
+<div class="data-table">
   <div class="table-top">
     <!-- Filter -->
     <div class="search-input">
@@ -19,7 +19,7 @@
 
   <!-- Table -->
   <div class="mat-elevation-z8" style="box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table matSort [dataSource]="dataSource">
       <!-- Code Column -->
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Шифр</th>
@@ -40,7 +40,7 @@
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="edit(element.code)"
                     style="line-height: 35px;height: 35px; display: flex; align-items: center;">
-              <mat-icon style="margin-right: 5px">edit_note</mat-icon>
+              <mat-icon style="margin-right: 5px">crop</mat-icon>
               <span>Редагувати</span>
             </button>
             <button mat-menu-item (click)="remove(element.code)"
