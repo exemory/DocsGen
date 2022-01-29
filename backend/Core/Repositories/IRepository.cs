@@ -12,9 +12,9 @@ namespace Core.Repositories
 
         void Update(T entity);
 
-        void Remove(int entityId);
+        void Delete(int entityId);
 
-        void Remove(T entity);
+        void Delete(T entity);
 
         Task<bool> Exists(int entityId);
 

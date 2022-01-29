@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.Base;
 using Core.Repositories;
 
 namespace Core
@@ -20,6 +21,9 @@ namespace Core
         public IRepository<Syllabus> Syllabuses { get; }
 
         public IRepository<TeacherLoad> TeacherLoads { get; }
+
+        public IRepository<TEntity> Repository<TEntity>()
+            where TEntity : Entity, new();
 
         public Task Save();
     }
