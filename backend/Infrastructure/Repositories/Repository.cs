@@ -39,14 +39,14 @@ namespace Infrastructure.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Remove(int entityId)
+        public void Delete(int entityId)
         {
-            Remove(new T { Id = entityId });
+            Delete(new T { Id = entityId });
         }
 
-        public void Remove(T entity)
+        public void Delete(T entity)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
+            _set.Remove(entity);
         }
 
         public async Task<bool> Exists(int entityId)
