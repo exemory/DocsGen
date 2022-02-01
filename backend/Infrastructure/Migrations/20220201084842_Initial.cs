@@ -126,7 +126,7 @@ namespace Infrastructure.Migrations
                     Code = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     KnowledgeBranchId = table.Column<int>(type: "integer", nullable: false),
-                    HeadOfSMCId = table.Column<int>(type: "integer", nullable: false),
+                    HeadOfSmcId = table.Column<int>(type: "integer", nullable: false),
                     GuarantorId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -139,8 +139,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Specialties_HeadsOfSmc_HeadOfSMCId",
-                        column: x => x.HeadOfSMCId,
+                        name: "FK_Specialties_HeadsOfSmc_HeadOfSmcId",
+                        column: x => x.HeadOfSmcId,
                         principalTable: "HeadsOfSmc",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -213,9 +213,9 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Specialties_HeadOfSMCId",
+                name: "IX_Specialties_HeadOfSmcId",
                 table: "Specialties",
-                column: "HeadOfSMCId");
+                column: "HeadOfSmcId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Specialties_KnowledgeBranchId",

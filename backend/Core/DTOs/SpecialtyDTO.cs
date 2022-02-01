@@ -14,7 +14,7 @@ namespace Core.DTOs
 
         public int KnowledgeBranchId { get; set; }
 
-        public int HeadOfSMCId { get; set; }
+        public int HeadOfSmcId { get; set; }
 
         public int GuarantorId { get; set; }
     }

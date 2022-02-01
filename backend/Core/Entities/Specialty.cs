@@ -13,8 +13,8 @@ namespace Core.Entities
         public int KnowledgeBranchId { get; set; }
         public KnowledgeBranch KnowledgeBranch { get; set; } = null!;
 
-        public int HeadOfSMCId { get; set; }
-        public HeadOfSmc HeadOfSMC { get; set; } = null!;
+        public int HeadOfSmcId { get; set; }
+        public HeadOfSmc HeadOfSmc { get; set; } = null!;
 
         public int GuarantorId { get; set; }
         public Guarantor Guarantor { get; set; } = null!;

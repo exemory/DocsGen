@@ -137,7 +137,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("GuarantorId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("HeadOfSMCId")
+                    b.Property<int>("HeadOfSmcId")
                         .HasColumnType("integer");
 
                     b.Property<int>("KnowledgeBranchId")
@@ -155,7 +155,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("GuarantorId")
                         .IsUnique();
 
-                    b.HasIndex("HeadOfSMCId");
+                    b.HasIndex("HeadOfSmcId");
 
                     b.HasIndex("KnowledgeBranchId");
 
@@ -319,9 +319,9 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.HeadOfSmc", "HeadOfSMC")
+                    b.HasOne("Core.Entities.HeadOfSmc", "HeadOfSmc")
                         .WithMany("Specialties")
-                        .HasForeignKey("HeadOfSMCId")
+                        .HasForeignKey("HeadOfSmcId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -333,7 +333,7 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Guarantor");
 
-                    b.Navigation("HeadOfSMC");
+                    b.Navigation("HeadOfSmc");
 
                     b.Navigation("KnowledgeBranch");
                 });
