@@ -2,15 +2,22 @@ using Core;
 using Core.Exceptions;
 using Core.Services;
 using Infrastructure;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using Service.Services;
 using System.Reflection;
+using Web.Conventions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Conventions.Add(new ControllerDocumentationConvention());
+    options.Conventions.Add(new RouteTokenTransformerConvention(new RouteParameterTransformer()));
+});
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddEndpointsApiExplorer();
@@ -21,6 +28,7 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Title = "DocsGen API"
     });
+
     options.CustomSchemaIds(type => type.Name.EndsWith("DTO", StringComparison.OrdinalIgnoreCase) ? type.Name[0..^3] : type.Name);
 
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -29,35 +37,38 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddScoped<IGuarantorService, GuarantorService>();
+builder.Services.AddScoped<IHeadOfSmcService, HeadOfSmcService>();
+builder.Services.AddScoped<IKnowledgeBranchService, KnowledgeBranchService>();
+builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ISyllabusService, SyllabusService>();
+builder.Services.AddScoped<ITeacherLoadService, TeacherLoadService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 builder.Services.AddDbContext<UniversityContext>(options =>
 {
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (databaseUrl == null) throw new EnvironmentException("Environment variable 'DATABASE_URL' is null.");
+
+    var databaseUri = new Uri(databaseUrl!);
+    var userInfo = databaseUri.UserInfo.Split(':');
+
+    var conStrBuilder = new NpgsqlConnectionStringBuilder
+    {
+        Host = databaseUri.Host,
+        Port = databaseUri.Port,
+        Username = userInfo[0],
+        Password = userInfo[1],
+        Database = databaseUri.LocalPath.TrimStart('/')
+    };
+
+    options.UseNpgsql(conStrBuilder.ToString());
+
     if (builder.Environment.IsDevelopment())
     {
-        string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-        options
-        .UseNpgsql(connection)
-        .EnableSensitiveDataLogging();
-    }
-    else
-    {
-        var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-        if (databaseUrl == null) throw new EnvironmentException("Environment variable DATABASE_URL is null.");
-
-        var databaseUri = new Uri(databaseUrl!);
-        var userInfo = databaseUri.UserInfo.Split(':');
-
-        var conStrBuilder = new NpgsqlConnectionStringBuilder
-        {
-            Host = databaseUri.Host,
-            Port = databaseUri.Port,
-            Username = userInfo[0],
-            Password = userInfo[1],
-            Database = databaseUri.LocalPath.TrimStart('/')
-        };
-
-        options.UseNpgsql(conStrBuilder.ToString());
+        options.EnableSensitiveDataLogging();
     }
 });
 
@@ -93,7 +104,7 @@ app.UseWhen(
         app.UseEndpoints(
             endpoints =>
             {
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapFallbackToFile("app/index.html");
             });
     });
 

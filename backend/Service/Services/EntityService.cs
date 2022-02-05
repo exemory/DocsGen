@@ -11,8 +11,8 @@ namespace Service.Services
         where TEntity : Entity, new()
         where TDTO : DTO
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        protected readonly IUnitOfWork _unitOfWork;
+        protected readonly IMapper _mapper;
 
         public EntityService(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -28,33 +28,33 @@ namespace Service.Services
                 throw new EntityNotFoundException("Entity doesn't exist in the repository.", typeof(TEntity));
             }
 
-            var dto = _mapper.Map<TEntity, TDTO>(entity);
+            var dto = MapToDTO(entity);
             return dto;
         }
 
         public async Task<IEnumerable<TDTO>> GetAll()
         {
             var entities = await _unitOfWork.Repository<TEntity>().GetAll();
-            var dtos = _mapper.Map<IEnumerable<TEntity>, IEnumerable<TDTO>>(entities);
+            var dtos = MapToDTO(entities);
             return dtos;
         }
 
         public async Task<TDTO> Add(TDTO dto)
         {
-            var entity = _mapper.Map<TDTO, TEntity>(dto);
+            var entity = MapToEntity(dto);
             entity.Id = default;
 
             _unitOfWork.Repository<TEntity>().Add(entity);
 
             await _unitOfWork.Save();
 
-            dto = _mapper.Map<TEntity, TDTO>(entity);
+            dto = MapToDTO(entity);
             return dto;
         }
 
         public async Task Update(TDTO dto)
         {
-            var entity = _mapper.Map<TDTO, TEntity>(dto);
+            var entity = MapToEntity(dto);
 
             var exists = await _unitOfWork.Repository<TEntity>().Exists(entity);
             if (!exists)
@@ -77,6 +77,25 @@ namespace Service.Services
             _unitOfWork.Repository<TEntity>().Delete(id);
 
             await _unitOfWork.Save();
+        }
+
+        protected TEntity MapToEntity(TDTO dto)
+        {
+            return _mapper.Map<TDTO, TEntity>(dto);
+        }
+        protected IEnumerable<TEntity> MapToEntity(IEnumerable<TDTO> dtos)
+        {
+            return _mapper.Map<IEnumerable<TDTO>, IEnumerable<TEntity>>(dtos);
+        }
+
+        protected IEnumerable<TDTO> MapToDTO(IEnumerable<TEntity> entities)
+        {
+            return _mapper.Map<IEnumerable<TEntity>, IEnumerable<TDTO>>(entities);
+        }
+
+        protected TDTO MapToDTO(TEntity entity)
+        {
+            return _mapper.Map<TEntity, TDTO>(entity);
         }
     }
 }

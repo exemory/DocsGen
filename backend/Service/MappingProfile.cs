@@ -10,6 +10,9 @@ namespace Service
         {
             CreateMap<Guarantor, GuarantorDTO>();
             CreateMap<GuarantorDTO, Guarantor>();
+
+            CreateMap<HeadOfSmc, HeadOfSmcDTO>();
+            CreateMap<HeadOfSmcDTO, HeadOfSmc>();
         }
     }
 }
