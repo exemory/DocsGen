@@ -8,7 +8,7 @@ namespace Core.DTOs
         public int Id { get; set; }
 
         [Required]
-        [Range(0, 1)]
+        [Range(1, 2)]
         public byte Type { get; set; } // 1 - lection, 2 - practice
 
         [Required]

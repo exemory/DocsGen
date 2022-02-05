@@ -6,7 +6,7 @@ namespace Core.Entities
     public class TeacherLoad : Entity
     {
         [Required]
-        [Range(0, 1)]
+        [Range(1, 2)]
         public byte Type { get; set; } // 1 - lection, 2 - practice
 
         [Required]
