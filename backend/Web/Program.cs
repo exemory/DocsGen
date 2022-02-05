@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using Service;
 using Service.Services;
 using System.Reflection;
 using Web.Conventions;
@@ -18,7 +19,7 @@ builder.Services.AddControllers(options =>
     options.Conventions.Add(new RouteTokenTransformerConvention(new RouteParameterTransformer()));
 });
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -46,6 +47,8 @@ builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ISyllabusService, SyllabusService>();
 builder.Services.AddScoped<ITeacherLoadService, TeacherLoadService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+
+builder.Services.AddScoped<IDataSeedService, DataSeedService>();
 
 builder.Services.AddDbContext<UniversityContext>(options =>
 {
@@ -110,9 +113,17 @@ app.UseWhen(
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<UniversityContext>();
+    var context = scope.ServiceProvider.GetRequiredService<UniversityContext>();
+    var appliedMigrations = context.Database.GetAppliedMigrations();
+    bool isDatabaseNew = !appliedMigrations.Any();
 
-    db.Database.Migrate();
+    context.Database.Migrate();
+
+    if (app.Environment.IsDevelopment() && isDatabaseNew)
+    {
+        var seeder = scope.ServiceProvider.GetRequiredService<IDataSeedService>();
+        seeder.SeedTestData();
+    }
 }
 
 app.Run();
