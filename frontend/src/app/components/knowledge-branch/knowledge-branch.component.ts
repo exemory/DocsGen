@@ -5,17 +5,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogModel, DialogConfirmComponent} from '../../shared/dialog-confirm/dialog-confirm.component';
+import {KnowledgeBranch} from '../../shared/interfaces/knowledge-branch';
+import {HttpService} from '../../shared/services/http.service';
 
-export interface KnowledgeBranch {
-  name: string;
-  code: number;
-}
-
-const ELEMENT_DATA: KnowledgeBranch[] = [
-  {code: 12, name: 'Інформаційні технології'},
-  {code: 15, name: 'Автоматизація та приладобудування'},
-  {code: 19, name: 'Архітектура та будівництво'},
-];
 
 @Component({
   selector: 'app-knowledge-branch',
@@ -23,17 +15,21 @@ const ELEMENT_DATA: KnowledgeBranch[] = [
   styleUrls: ['./knowledge-branch.component.scss']
 })
 export class KnowledgeBranchComponent implements OnInit, AfterViewInit {
+  isLoading = true;
 
-  constructor(private router: Router, public dialog: MatDialog) {
+  constructor(private router: Router, public dialog: MatDialog, private http: HttpService) {
   }
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  dataSource = new MatTableDataSource<KnowledgeBranch>();
   displayedColumns: string[] = ['code', 'name', 'details'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   ngOnInit(): void {
+    this.http.get('knowledge-branches').subscribe((data: KnowledgeBranch[]) => this.dataSource.data = data,
+      () => {
+      }, () => this.isLoading = false);
   }
 
   ngAfterViewInit(): void {
@@ -54,17 +50,20 @@ export class KnowledgeBranchComponent implements OnInit, AfterViewInit {
     this.router.navigate(['knowledgebranch', 'edit', id]);
   }
 
-  remove(code): any {
-    const selectedBranch: KnowledgeBranch = this.dataSource.data.filter(item => item.code === code)[0];
+  remove(id): any {
+    const selectedBranch: KnowledgeBranch = this.dataSource.data.filter(item => item.id === id)[0];
     const dialogData = new ConfirmDialogModel('Підтвердіть дію', `Ви впевнені, що хочете видалити галузь знань "${selectedBranch.name}"?`);
+
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      width: '400px',
+      width: '600px',
       data: dialogData
     });
+
     dialogRef.afterClosed().subscribe(dialogResult => {
-        if (dialogResult) {
-          this.dataSource.data = this.dataSource.data.filter(item => item.code !== code);
-        }
+      if (dialogResult) {
+        this.http.delete(`knowledge-branches/${id}`).subscribe(data => console.log(data));
+        this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);
+      }
     });
   }
 }

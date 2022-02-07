@@ -32,6 +32,7 @@ import {SubjectsComponent} from './components/subjects/subjects.component';
 import {SyllabusesComponent} from './components/syllabuses/syllabuses.component';
 import {LoadsComponent} from './components/loads/loads.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -50,29 +51,30 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     SyllabusesComponent,
     LoadsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatTableModule,
-    MatInputModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatIconModule,
-    MatMenuModule,
-    MatDialogModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatOptionModule,
-    MatSidenavModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatTableModule,
+        MatInputModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatIconModule,
+        MatMenuModule,
+        MatDialogModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatOptionModule,
+        MatSidenavModule,
+        MatProgressSpinnerModule
+    ],
   providers: [
     {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}
   ],

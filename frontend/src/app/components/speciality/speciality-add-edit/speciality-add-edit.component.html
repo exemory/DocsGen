@@ -1,4 +1,4 @@
-<form class="card" [formGroup]="form">
+<form class="form" [formGroup]="form">
   <div class="page-header">
     <h1 *ngIf="isAddMode">Додати нову спеціальність</h1>
     <h1 *ngIf="!isAddMode">Редагувати спеціальність</h1>
@@ -8,34 +8,34 @@
     </button>
   </div>
 
-  <div class="card-fields">
-    <mat-form-field appearance="outline" class="card-input">
+  <div class="form-fields">
+    <mat-form-field appearance="outline" class="form-input">
       <mat-label>Шифр</mat-label>
       <input matInput placeholder="Шифр" formControlName="code">
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="card-input">
+    <mat-form-field appearance="outline" class="form-input">
       <mat-label>Назва</mat-label>
       <input matInput placeholder="Назва" formControlName="name">
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="card-input">
+    <mat-form-field appearance="outline" class="form-input">
       <mat-label>Галузь знань</mat-label>
       <input matInput placeholder="Назва" formControlName="knowledgeBranch">
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="card-input">
+    <mat-form-field appearance="outline" class="form-input">
       <mat-label>Голова</mat-label>
       <input matInput placeholder="Назва" formControlName="headOfSMC">
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="card-input">
+    <mat-form-field appearance="outline" class="form-input">
       <mat-label>Гарант</mat-label>
       <input matInput placeholder="Назва" formControlName="guarantor">
     </mat-form-field>
   </div>
 
-  <div class="card-button">
+  <div class="form-button">
     <button *ngIf="isAddMode" mat-raised-button color="primary"
             (click)="create()">Додати
     </button>

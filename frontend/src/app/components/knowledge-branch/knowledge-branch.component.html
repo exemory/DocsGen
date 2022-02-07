@@ -18,8 +18,15 @@
   </div>
 
   <!-- Table -->
+  <div class="loader" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <div>
+      Завантаження даних...
+    </div>
+  </div>
+
   <div class="mat-elevation-z8" style="box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);">
-    <table mat-table matSort [dataSource]="dataSource">
+    <table mat-table matSort [dataSource]="dataSource" *ngIf="!isLoading">
       <!-- Code Column -->
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Шифр</th>
@@ -37,13 +44,15 @@
           <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon class="icon-gray">more_vert</mat-icon>
           </button>
+
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="edit(element.code)"
+            <button mat-menu-item (click)="edit(element.id)"
                     style="line-height: 35px;height: 35px; display: flex; align-items: center;">
-              <mat-icon style="margin-right: 5px">crop</mat-icon>
+              <mat-icon fontSet="material-icons-outlined" style="margin-right: 5px">edit_note</mat-icon>
               <span>Редагувати</span>
             </button>
-            <button mat-menu-item (click)="remove(element.code)"
+
+            <button mat-menu-item (click)="remove(element.id)"
                     style="line-height: 35px;height: 35px; color: #f65454; display: flex; align-items: center;">
               <mat-icon color="warn" style="margin-right: 5px">delete_sweep</mat-icon>
               <span>Видалити</span>
@@ -51,13 +60,16 @@
           </mat-menu>
         </td>
       </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">Немає даних, що відповідають фільтру "{{input.value}}"</td>
+        <td class="mat-cell" colspan="4">Немає даних</td>
       </tr>
     </table>
+
     <!-- Paginator -->
     <mat-paginator [pageSizeOptions]="[5, 10, 15, 100]" aria-label="Select page of users"></mat-paginator>
   </div>

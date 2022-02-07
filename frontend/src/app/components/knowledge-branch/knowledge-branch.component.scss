@@ -24,3 +24,12 @@
     color: #7c7c7c;
   }
 }
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding-top: 20px;
+}

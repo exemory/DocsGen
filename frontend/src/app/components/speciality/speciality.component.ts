@@ -8,7 +8,7 @@ import {ConfirmDialogModel, DialogConfirmComponent} from '../../shared/dialog-co
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith, tap} from 'rxjs/operators';
-import {KnowledgeBranch} from '../knowledge-branch/knowledge-branch.component';
+import {KnowledgeBranch} from '../../shared/interfaces/knowledge-branch';
 
 export interface Speciality {
   name: string;
@@ -39,11 +39,7 @@ const ELEMENT_DATA: Speciality[] = [
 })
 export class SpecialityComponent implements OnInit, AfterViewInit {
   selectedBranch = new FormControl();
-  options: KnowledgeBranch[] = [
-    {code: 12, name: 'Інформаційні технології'},
-    {code: 15, name: 'Автоматизація та приладобудування'},
-    {code: 19, name: 'Архітектура та будівництво'}
-  ];
+  options: KnowledgeBranch[] = [];
   filteredOptions: Observable<any[]>;
 
   constructor(private router: Router, public dialog: MatDialog) {
