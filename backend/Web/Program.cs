@@ -13,6 +13,8 @@ using Web.Conventions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors();
+
 builder.Services.AddControllers(options =>
 {
     options.Conventions.Add(new ControllerDocumentationConvention());
@@ -76,6 +78,13 @@ builder.Services.AddDbContext<UniversityContext>(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod();
+});
 
 if (app.Environment.IsDevelopment())
 {
