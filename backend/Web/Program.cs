@@ -2,26 +2,33 @@ using Core;
 using Core.Exceptions;
 using Core.Services;
 using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using Service;
 using Service.Services;
 using System.Reflection;
+using System.Text;
 using Web.Conventions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors();
-
-builder.Services.AddControllers(options =>
+if (builder.Configuration["DATABASE_URL"] != null)
 {
-    options.Conventions.Add(new ControllerDocumentationConvention());
-    options.Conventions.Add(new RouteTokenTransformerConvention(new RouteParameterTransformer()));
-});
+    builder.Configuration["ConnectionStrings:DefaultConnection"] = builder.Configuration["DATABASE_URL"];
+}
 
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+if (builder.Configuration["ConnectionStrings:DefaultConnection"] == null)
+    throw new ConfigurationException("Configuration property 'ConnectionStrings:DefaultConnection' is not set.");
+if (builder.Configuration["AdminPasswordHash"] == null)
+    throw new ConfigurationException("Configuration property 'AdminPasswordHash' is not set.");
+if (builder.Configuration["Jwt:Secret"] == null)
+    throw new ConfigurationException("Configuration property 'Jwt:Secret' is not set.");
+
+builder.Services.AddCors();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -32,6 +39,28 @@ builder.Services.AddSwaggerGen(options =>
         Title = "DocsGen API"
     });
 
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        BearerFormat = "JWT",
+        Description = "JWT Authorization header using the Bearer scheme."
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+
     options.CustomSchemaIds(type => type.Name.EndsWith("DTO", StringComparison.OrdinalIgnoreCase) ? type.Name[0..^3] : type.Name);
 
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -39,23 +68,9 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlFilePath);
 });
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-builder.Services.AddScoped<IGuarantorService, GuarantorService>();
-builder.Services.AddScoped<IHeadOfSmcService, HeadOfSmcService>();
-builder.Services.AddScoped<IKnowledgeBranchService, KnowledgeBranchService>();
-builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
-builder.Services.AddScoped<ISubjectService, SubjectService>();
-builder.Services.AddScoped<ISyllabusService, SyllabusService>();
-builder.Services.AddScoped<ITeacherLoadService, TeacherLoadService>();
-builder.Services.AddScoped<ITeacherService, TeacherService>();
-
-builder.Services.AddScoped<IDataSeedService, DataSeedService>();
-
 builder.Services.AddDbContext<UniversityContext>(options =>
 {
-    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-    if (databaseUrl == null) throw new EnvironmentException("Environment variable 'DATABASE_URL' is null.");
+    var databaseUrl = builder.Configuration.GetConnectionString("DefaultConnection");
 
     var databaseUri = new Uri(databaseUrl!);
     var userInfo = databaseUri.UserInfo.Split(':');
@@ -75,6 +90,42 @@ builder.Services.AddDbContext<UniversityContext>(options =>
     {
         options.EnableSensitiveDataLogging();
     }
+});
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IGuarantorService, GuarantorService>();
+builder.Services.AddScoped<IHeadOfSmcService, HeadOfSmcService>();
+builder.Services.AddScoped<IKnowledgeBranchService, KnowledgeBranchService>();
+builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ISyllabusService, SyllabusService>();
+builder.Services.AddScoped<ITeacherLoadService, TeacherLoadService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<IDataSeedService, DataSeedService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+{
+    var secret = builder.Configuration["Jwt:Secret"];
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
+    };
+});
+
+builder.Services.AddControllers(options =>
+{
+    options.Conventions.Add(new ControllerDocumentationConvention());
+    options.Conventions.Add(new RouteTokenTransformerConvention(new RouteParameterTransformer()));
 });
 
 var app = builder.Build();
@@ -100,6 +151,8 @@ app.UseWhen(
     app =>
     {
         app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseEndpoints(
             endpoints =>
             {

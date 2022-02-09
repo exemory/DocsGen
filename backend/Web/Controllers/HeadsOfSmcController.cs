@@ -1,12 +1,14 @@
 ﻿using Core.DTOs;
 using Core.Exceptions;
 using Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace DocsGen.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]

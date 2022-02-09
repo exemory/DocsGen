@@ -5,8 +5,7 @@
       "applicationUrl": "https://localhost:7164;http://localhost:5164",
       "dotnetRunMessages": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_URL": "postgres://postgres:pgpass@localhost:5432/university"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Docker": {
@@ -16,8 +15,7 @@
       "useSSL": true,
       "launchBrowser": true,
       "environmentVariables": {
-        "DATABASE_URL": "postgres://postgres:pgpass@host.docker.internal:5432/university",
-        "Logging__Console__FormatterName": "simple"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }

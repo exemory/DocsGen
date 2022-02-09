@@ -25,28 +25,27 @@ namespace Core.Exceptions
         }
 
         public EntityNotFoundException()
-            : base()
         {
         }
 
-        public EntityNotFoundException(string message)
+        public EntityNotFoundException(string? message)
             : base(message)
         {
         }
 
-        public EntityNotFoundException(string message, Exception innerException)
+        public EntityNotFoundException(string? message, Exception? innerException)
             : base(message, innerException)
         {
         }
 
-        public EntityNotFoundException(string message, Type entityType)
+        public EntityNotFoundException(string? message, Type? entityType)
             : base(message)
         {
             _entityType = entityType;
         }
 
-        protected EntityNotFoundException(SerializationInfo info, StreamingContext ctxt)
-            : base(info, ctxt)
+        protected EntityNotFoundException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }
