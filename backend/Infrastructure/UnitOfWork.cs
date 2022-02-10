@@ -1,8 +1,11 @@
 ﻿using Core;
 using Core.Entities;
 using Core.Entities.Base;
+using Core.Exceptions;
 using Core.Repositories;
 using Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace Infrastructure
 {
@@ -52,7 +55,34 @@ namespace Infrastructure
 
         public async Task Save()
         {
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                if (ex.Entries.Count > 0)
+                {
+                    throw new EntityNotFoundException("Entity not found.", ex, ex.Entries[0].Entity.GetType());
+                }
+
+                throw;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.Entries.Count > 0 && ex.InnerException is DbException dbEx)
+                {
+                    switch (dbEx.SqlState)
+                    {
+                        case "23503":
+                            throw new EntityConflictException("Insert or update operation violates foreign key constraint.", ex, ex.Entries[0].Entity.GetType());
+                        case "23505":
+                            throw new EntityConflictException("Duplicate key value violates unique constraint.", ex, ex.Entries[0].Entity.GetType());
+                    }
+                }
+
+                throw;
+            }
         }
 
         public void Dispose()

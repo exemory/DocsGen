@@ -74,12 +74,21 @@ namespace DocsGen.Controllers
         /// <returns>A newly created specialty</returns>
         /// <response code="201">Returns the newly created item</response>
         /// <response code="400">Data is not valid</response>
+        /// <response code="409">Unique constraint or key relation violation</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<SpecialtyDTO>> AddSpecialty([FromBody, Required]SpecialtyDTO specialty)
         {
-            specialty = await _specialtyService.Add(specialty);
+            try
+            {
+                specialty = await _specialtyService.Add(specialty);
+            }
+            catch (EntityConflictException)
+            {
+                return Conflict();
+            }
 
             return CreatedAtAction(nameof(GetSpecialty), new { id = specialty.Id }, specialty);
         }
@@ -93,10 +102,12 @@ namespace DocsGen.Controllers
         /// <response code="204">Item has been updated</response>
         /// <response code="400">Data is not valid</response>
         /// <response code="404">Item not found</response>
+        /// <response code="409">Unique constraint or key relation violation</response>
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> UpdateSpecialty(int id, [FromBody, Required]SpecialtyDTO specialty)
         {
             if (id != specialty.Id)
@@ -107,6 +118,10 @@ namespace DocsGen.Controllers
             try
             {
                 await _specialtyService.Update(specialty);
+            }
+            catch (EntityConflictException)
+            {
+                return Conflict();
             }
             catch (EntityNotFoundException)
             {

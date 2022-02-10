@@ -2,7 +2,6 @@
 using Core;
 using Core.DTOs.Base;
 using Core.Entities.Base;
-using Core.Exceptions;
 using Core.Services;
 
 namespace Service.Services
@@ -23,11 +22,6 @@ namespace Service.Services
         public async Task<TDTO> GetById(int id)
         {
             var entity = await _unitOfWork.Repository<TEntity>().GetById(id);
-            if (entity == null)
-            {
-                throw new EntityNotFoundException("Entity doesn't exist in the repository.", typeof(TEntity));
-            }
-
             var dto = MapToDTO(entity);
             return dto;
         }
@@ -56,24 +50,12 @@ namespace Service.Services
         {
             var entity = MapToEntity(dto);
 
-            var exists = await _unitOfWork.Repository<TEntity>().Exists(entity);
-            if (!exists)
-            {
-                throw new EntityNotFoundException("Entity doesn't exist in the repository.", typeof(TEntity));
-            }
-
             _unitOfWork.Repository<TEntity>().Update(entity);
             await _unitOfWork.Save();
         }
 
         public async Task Delete(int id)
         {
-            var exists = await _unitOfWork.Repository<TEntity>().Exists(id);
-            if (!exists)
-            {
-                throw new EntityNotFoundException("Entity doesn't exist in the repository.", typeof(TEntity));
-            }
-
             _unitOfWork.Repository<TEntity>().Delete(id);
 
             await _unitOfWork.Save();

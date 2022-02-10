@@ -3,27 +3,8 @@
 namespace Core.Exceptions
 {
     [Serializable]
-    public class EntityNotFoundException : Exception
+    public class EntityNotFoundException : EntityException
     {
-        private readonly Type? _entityType;
-
-        public virtual Type? EntityType => _entityType;
-
-        public override string Message
-        {
-            get
-            {
-                string msg = base.Message;
-
-                if (_entityType != null)
-                {
-                    return $"{msg} (Entity '{_entityType.Name}')";
-                }
-
-                return msg;
-            }
-        }
-
         public EntityNotFoundException()
         {
         }
@@ -33,19 +14,27 @@ namespace Core.Exceptions
         {
         }
 
+        public EntityNotFoundException(Type? entityType)
+            : base(entityType)
+        {
+        }
+
         public EntityNotFoundException(string? message, Exception? innerException)
             : base(message, innerException)
         {
         }
 
         public EntityNotFoundException(string? message, Type? entityType)
-            : base(message)
+            : base(message, entityType)
         {
-            _entityType = entityType;
         }
 
-        protected EntityNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        public EntityNotFoundException(string? message, Exception? innerException, Type? entityType)
+            : base(message, innerException, entityType)
+        {
+        }
+
+        protected EntityNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

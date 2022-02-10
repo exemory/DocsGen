@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Base;
+using Core.Exceptions;
 using Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +16,14 @@ namespace Infrastructure.Repositories
             _set = _context.Set<T>();
         }
 
-        public async Task<T?> GetById(int entityId)
+        public async Task<T> GetById(int entityId)
         {
             var entity = await _set.FindAsync(entityId);
+
+            if (entity == null)
+            {
+                throw new EntityNotFoundException("Entity not found.", typeof(T));
+            }
 
             return entity;
         }

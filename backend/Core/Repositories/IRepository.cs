@@ -4,7 +4,7 @@ namespace Core.Repositories
 {
     public interface IRepository<T> where T : Entity
     {
-        Task<T?> GetById(int entityId);
+        Task<T> GetById(int entityId);
 
         Task<IEnumerable<T>> GetAll();
 
