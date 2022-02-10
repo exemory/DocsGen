@@ -1,5 +1,5 @@
 <div class="page" [ngClass]="{'nav-small': isNavSmall}">
-  <nav class="nav">
+  <nav class="nav" *ngIf="loggedIn">
     <div>
       <span>DocsGen</span>
       <div class="collapse-icon" (click)="isNavSmall = !isNavSmall">
@@ -16,7 +16,7 @@
         <mat-icon fontSet="material-icons-outlined">cottage</mat-icon>
         <span>Головна</span>
       </a></li>
-      <li><a routerLink="/knowledgebranch" routerLinkActive="active-link">
+      <li><a routerLink="/knowledge-branch" routerLinkActive="active-link">
         <mat-icon fontSet="material-icons-outlined">account_balance</mat-icon>
         <span>Галузь&nbsp;знань</span>
       </a></li>
@@ -24,29 +24,33 @@
         <mat-icon fontSet="material-icons-outlined">school</mat-icon>
         <span>Спеціальність</span>
       </a></li>
-      <li><a routerLink="/teachers" routerLinkActive="active-link">
+      <li><a routerLink="/teacher" routerLinkActive="active-link">
         <mat-icon fontSet="material-icons-outlined">group</mat-icon>
         <span>Викладачі</span>
       </a></li>
-      <li><a routerLink="/heads" routerLinkActive="active-link">
+      <li><a routerLink="/head" routerLinkActive="active-link">
         <mat-icon fontSet="material-icons-outlined">account_circle</mat-icon>
         <span>Голови</span>
       </a></li>
-      <li><a routerLink="/guarantors" routerLinkActive="active-link">
+      <li><a routerLink="/guarantor" routerLinkActive="active-link">
         <mat-icon fontSet="material-icons-outlined">how_to_reg</mat-icon>
         <span>Гаранти</span>
       </a></li>
-      <li><a routerLink="/subjects" routerLinkActive="active-link">
+      <li><a routerLink="/subject" routerLinkActive="active-link">
         <mat-icon fontSet="material-icons-outlined">library_books</mat-icon>
         <span>Предмети</span>
       </a></li>
-      <li><a routerLink="/syllabuses" routerLinkActive="active-link">
+      <li><a routerLink="/syllabus" routerLinkActive="active-link">
         <mat-icon fontSet="material-icons-outlined">dashboard</mat-icon>
         <span>Программа</span>
       </a></li>
-      <li><a routerLink="/loads" routerLinkActive="active-link">
+      <li><a routerLink="/load" routerLinkActive="active-link">
         <mat-icon fontSet="material-icons-outlined">space_dashboard</mat-icon>
         <span>Завантаження</span>
+      </a></li>
+      <li (click)="logout()" class="logout"><a>
+        <mat-icon fontSet="material-icons-outlined">exit_to_app</mat-icon>
+        <span>Вихід</span>
       </a></li>
     </ul>
   </nav>

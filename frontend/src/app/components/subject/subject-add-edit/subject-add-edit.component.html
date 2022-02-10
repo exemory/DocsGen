@@ -1,0 +1,26 @@
+<div class="page-header">
+  <h1 *ngIf="isAddMode">Додати предмет</h1>
+  <h1 *ngIf="!isAddMode">Редагувати предмет</h1>
+  <button mat-button color="accent" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+    Повернутися
+  </button>
+</div>
+
+<form class="form" [formGroup]="form">
+  <div class="form-fields">
+    <div class="form-input">
+      <label for="name">Назва предмета</label>
+      <input type="text" id="name" placeholder="Назва галузі" formControlName="name">
+    </div>
+  </div>
+
+  <div class="form-button">
+    <button *ngIf="isAddMode" mat-raised-button color="primary" (click)="create()" [disabled]="form.invalid">
+      Додати
+    </button>
+    <button *ngIf="!isAddMode" mat-raised-button color="primary" (click)="edit()" [disabled]="form.invalid">
+      Редагувати
+    </button>
+  </div>
+</form>

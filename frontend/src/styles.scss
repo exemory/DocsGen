@@ -52,6 +52,10 @@ body {
     border-radius: 5px;
     font-size: 14px;
     color: #727272;
+
+    &:focus {
+      outline: 1px solid #dedee8;
+    }
   }
 }
 
@@ -59,21 +63,7 @@ body {
   width: 100%;
   position: relative;
 
-  button {
-    position: absolute;
-    top: -2px;
-    right: 8px;
-
-    span {
-      mat-icon {
-        font-size: 21px;
-        color: #727272;
-        cursor: pointer;
-      }
-    }
-  }
-
-  input {
+  input, mat-select {
     width: 100%;
     padding: 10px;
     background: #f9faff;
@@ -82,5 +72,13 @@ body {
     border-radius: 5px;
     font-size: 14px;
     color: #727272;
+
+    &:focus {
+      outline: 1px solid #dedee8;
+    }
+  }
+
+  mat-select {
+    padding: 8px;
   }
 }

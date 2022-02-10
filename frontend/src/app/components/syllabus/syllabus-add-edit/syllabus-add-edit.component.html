@@ -1,0 +1,70 @@
+<div class="page-header">
+  <h1 *ngIf="isAddMode">Додати программу</h1>
+  <h1 *ngIf="!isAddMode">Редагувати программу</h1>
+  <button mat-button color="accent" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+    Повернутися
+  </button>
+</div>
+
+<form class="form" [formGroup]="form">
+  <div class="form-fields">
+    <div class="form-input">
+      <label for="credits">Кредити</label>
+      <input type="text" id="credits" placeholder="Кредити" formControlName="credits">
+    </div>
+    <div class="form-input">
+      <label for="totalHours">Всього годин</label>
+      <input type="number" id="totalHours" placeholder="Всього годин" formControlName="totalHours">
+    </div>
+    <div class="form-input">
+      <label for="classroomHours">Класні години</label>
+      <input type="number" id="classroomHours" placeholder="Класні години" formControlName="classroomHours">
+    </div>
+    <div class="form-input">
+      <label for="lectureHours">Лекційні години</label>
+      <input type="number" id="lectureHours" placeholder="Лекційні години" formControlName="lectureHours">
+    </div>
+    <div class="form-input">
+      <label for="labHours">Лабораторних годин</label>
+      <input type="number" id="labHours" placeholder="Лабораторних годин" formControlName="labHours">
+    </div>
+    <div class="form-input">
+      <label for="practicalHours">Практичні години</label>
+      <input type="number" id="practicalHours" placeholder="Практичні години" formControlName="practicalHours">
+    </div>
+    <div class="form-input">
+      <label for="courseProjects">Курсові проекти</label>
+      <input type="number" id="courseProjects" placeholder="Курсові проекти" formControlName="courseProjects">
+    </div>
+    <div class="form-input">
+      <label for="courseWork">Курсова робота</label>
+      <input type="number" id="courseWork" placeholder="Курсова робота" formControlName="courseWork">
+    </div>
+    <div class="form-input">
+      <label for="rgr">rgr</label>
+      <input type="number" id="rgr" placeholder="rgr" formControlName="rgr">
+    </div>
+    <div class="form-input">
+      <label for="r">r</label>
+      <input type="number" id="r" placeholder="r" formControlName="r">
+    </div>
+    <div class="form-input">
+      <label for="formOfControl">Форма контролю</label>
+      <input type="text" id="formOfControl" placeholder="Форма контролю" formControlName="formOfControl">
+    </div>
+    <div class="form-input">
+      <label for="semester">Семестр</label>
+      <input type="number" id="semester" placeholder="Семестр" formControlName="semester">
+    </div>
+  </div>
+
+  <div class="form-button">
+    <button *ngIf="isAddMode" mat-raised-button color="primary" (click)="create()" [disabled]="form.invalid">
+      Додати
+    </button>
+    <button *ngIf="!isAddMode" mat-raised-button color="primary" (click)="edit()" [disabled]="form.invalid">
+      Редагувати
+    </button>
+  </div>
+</form>

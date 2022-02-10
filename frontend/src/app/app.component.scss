@@ -42,6 +42,7 @@
     flex-direction: column;
     list-style: none;
     margin-top: 30px;
+    min-height: calc(100vh - 90px);
 
     li {
       padding: 5px 20px;
@@ -79,6 +80,11 @@
           margin-right: 10px;
         }
       }
+    }
+
+    .logout {
+      margin-top: auto;
+      cursor: pointer;
     }
   }
 }

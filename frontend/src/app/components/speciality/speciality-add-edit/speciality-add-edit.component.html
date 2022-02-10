@@ -1,46 +1,58 @@
+<div class="page-header">
+  <h1 *ngIf="isAddMode">Додати спеціальність</h1>
+  <h1 *ngIf="!isAddMode">Редагувати спеціальність</h1>
+  <button mat-button color="accent" (click)="goBack()">
+    <mat-icon>keyboard_backspace</mat-icon>
+    Повернутися
+  </button>
+</div>
+
 <form class="form" [formGroup]="form">
-  <div class="page-header">
-    <h1 *ngIf="isAddMode">Додати нову спеціальність</h1>
-    <h1 *ngIf="!isAddMode">Редагувати спеціальність</h1>
-    <button mat-button color="accent" (click)="goBack()">
-      <mat-icon>keyboard_backspace</mat-icon>
-      Повернутися
-    </button>
-  </div>
-
   <div class="form-fields">
-    <mat-form-field appearance="outline" class="form-input">
-      <mat-label>Шифр</mat-label>
-      <input matInput placeholder="Шифр" formControlName="code">
-    </mat-form-field>
+    <div class="form-input">
+      <label for="code">Шифр</label>
+      <input type="text" id="code" placeholder="Шифр галузі" formControlName="code">
+    </div>
 
-    <mat-form-field appearance="outline" class="form-input">
-      <mat-label>Назва</mat-label>
-      <input matInput placeholder="Назва" formControlName="name">
-    </mat-form-field>
+    <div class="form-input">
+      <label for="name">Назва</label>
+      <input type="text" id="name" placeholder="Назва галузі" formControlName="name">
+    </div>
 
-    <mat-form-field appearance="outline" class="form-input">
-      <mat-label>Галузь знань</mat-label>
-      <input matInput placeholder="Назва" formControlName="knowledgeBranch">
-    </mat-form-field>
+    <div class="form-input">
+      <label for="knowledgeBranch">Галузь знань</label>
+      <mat-select formControlName="knowledgeBranchId" id="knowledgeBranch" placeholder="Назва галузі">
+        <mat-option *ngFor="let branch of knowledgeBranches" [value]="branch.id">
+          {{branch.code}} {{branch.name}}
+        </mat-option>
+      </mat-select>
+    </div>
 
-    <mat-form-field appearance="outline" class="form-input">
-      <mat-label>Голова</mat-label>
-      <input matInput placeholder="Назва" formControlName="headOfSMC">
-    </mat-form-field>
+    <div class="form-input">
+      <label for="headOfSMC">Голова</label>
+      <mat-select formControlName="headOfSmcId" id="headOfSMC" placeholder="Голова галузі">
+        <mat-option *ngFor="let head of headsOfSMC" [value]="head.id">
+          {{head.surname}} {{head.name}} {{head.patronymic}}
+        </mat-option>
+      </mat-select>
+    </div>
 
-    <mat-form-field appearance="outline" class="form-input">
-      <mat-label>Гарант</mat-label>
-      <input matInput placeholder="Назва" formControlName="guarantor">
-    </mat-form-field>
+    <div class="form-input">
+      <label for="guarantor">Гарант</label>
+      <mat-select formControlName="guarantorId" id="guarantor" placeholder="Гарант галузі">
+        <mat-option *ngFor="let guarantor of guarantors" [value]="guarantor.id">
+          {{guarantor.surname}} {{guarantor.name}} {{guarantor.patronymic}}
+        </mat-option>
+      </mat-select>
+    </div>
   </div>
 
   <div class="form-button">
-    <button *ngIf="isAddMode" mat-raised-button color="primary"
-            (click)="create()">Додати
+    <button *ngIf="isAddMode" mat-raised-button color="primary" (click)="create()" [disabled]="form.invalid">
+      Додати
     </button>
-    <button *ngIf="!isAddMode" mat-raised-button color="primary"
-            (click)="edit()">Редагувати
+    <button *ngIf="!isAddMode" mat-raised-button color="primary" (click)="edit()" [disabled]="form.invalid">
+      Редагувати
     </button>
   </div>
 </form>

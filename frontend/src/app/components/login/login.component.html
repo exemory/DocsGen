@@ -1,0 +1,11 @@
+<div>
+  <h1>Вхід</h1>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Пароль</mat-label>
+    <input matInput placeholder="Пароль" [formControl]="password">
+    <mat-icon matSuffix>lock</mat-icon>
+  </mat-form-field>
+
+  <button mat-stroked-button color="primary" (click)="onLogin()">Увійти</button>
+</div>

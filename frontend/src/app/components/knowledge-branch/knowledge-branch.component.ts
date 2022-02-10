@@ -1,40 +1,48 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
-import {MatPaginator} from '@angular/material/paginator';
-import {Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
-import {ConfirmDialogModel, DialogConfirmComponent} from '../../shared/dialog-confirm/dialog-confirm.component';
-import {KnowledgeBranch} from '../../shared/interfaces/knowledge-branch';
-import {HttpService} from '../../shared/services/http.service';
-
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
+import {MatSort, Sort} from "@angular/material/sort";
+import {Router} from "@angular/router";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
+import {HttpService} from "../../shared/services/http.service";
+import {KnowledgeBranch} from "../../shared/interfaces/knowledge-branch";
+import {
+  ConfirmDialogModel,
+  DialogConfirmComponent
+} from "../../shared/components/dialog-confirm/dialog-confirm.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-knowledge-branch',
   templateUrl: './knowledge-branch.component.html',
   styleUrls: ['./knowledge-branch.component.scss']
 })
-export class KnowledgeBranchComponent implements OnInit, AfterViewInit {
+export class KnowledgeBranchComponent implements OnInit {
   isLoading = true;
 
-  constructor(private router: Router, public dialog: MatDialog, private http: HttpService) {
+  constructor(private router: Router, public dialog: MatDialog,
+              private http: HttpService, private toastr: ToastrService) {
   }
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
+
+  @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   dataSource = new MatTableDataSource<KnowledgeBranch>();
   displayedColumns: string[] = ['code', 'name', 'details'];
 
   ngOnInit(): void {
-    this.http.get('knowledge-branches').subscribe((data: KnowledgeBranch[]) => this.dataSource.data = data,
-      () => {
-      }, () => this.isLoading = false);
+    this.http.get('knowledge-branches').subscribe({
+      next: (data: KnowledgeBranch[]) => this.dataSource.data = data,
+      error: (e) => console.error(e),
+      complete: () => this.isLoading = false
+    })
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event): any {
@@ -43,14 +51,14 @@ export class KnowledgeBranchComponent implements OnInit, AfterViewInit {
   }
 
   create(): void {
-    this.router.navigate(['knowledgebranch', 'add']);
+    this.router.navigate(['knowledge-branch', 'add']);
   }
 
-  edit(id): void {
-    this.router.navigate(['knowledgebranch', 'edit', id]);
+  edit(id: number): void {
+    this.router.navigate(['knowledge-branch', 'edit', id]);
   }
 
-  remove(id): any {
+  remove(id: number): any {
     const selectedBranch: KnowledgeBranch = this.dataSource.data.filter(item => item.id === id)[0];
     const dialogData = new ConfirmDialogModel('Підтвердіть дію', `Ви впевнені, що хочете видалити галузь знань "${selectedBranch.name}"?`);
 
@@ -61,8 +69,14 @@ export class KnowledgeBranchComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
-        this.http.delete(`knowledge-branches/${id}`).subscribe(data => console.log(data));
-        this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);
+        this.http.delete(`knowledge-branches/${id}`).subscribe({
+          next: data => null,
+          error: err => this.toastr.error(err.message),
+          complete: () => {
+            this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);
+            this.toastr.success('', 'Успішно видалено');
+          }
+        })
       }
     });
   }

@@ -1,0 +1,10 @@
+@import "../../knowledge-branch/knowledge-branch-add-edit/knowledge-branch-add-edit.component";
+
+
+.form {
+  &-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0 10px;
+  }
+}
