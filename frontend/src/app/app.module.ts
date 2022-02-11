@@ -73,8 +73,8 @@ import {APP_BASE_HREF} from "@angular/common";
     })
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()},
   ],
   bootstrap: [AppComponent]
