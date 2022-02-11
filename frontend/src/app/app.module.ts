@@ -33,6 +33,7 @@ import {GuarantorAddEditComponent} from './components/guarantor/guarantor-add-ed
 import {SubjectAddEditComponent} from './components/subject/subject-add-edit/subject-add-edit.component';
 import {SyllabusAddEditComponent} from './components/syllabus/syllabus-add-edit/syllabus-add-edit.component';
 import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edit.component';
+import {APP_BASE_HREF} from "@angular/common";
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edi
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}
+    {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()},
+    {provide: APP_BASE_HREF, useValue: '/app/'}
   ],
   bootstrap: [AppComponent]
 })
