@@ -26,6 +26,7 @@ export class HttpService {
   }
 
   post(apiRoute: string, body: any): Observable<any> {
+    console.log(`${this.apiURL + apiRoute}`);
     return this.http.post(`${this.apiURL + apiRoute}`, body, this.httpOptions);
   }
 
