@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../backend/Web/wwwroot/app/",
+            "outputPath": "../backend/Web/wwwroot/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -54,8 +54,6 @@
                   "maximumError": "4kb"
                 }
               ],
-              "baseHref": "/",
-              "deployUrl": "/app/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
