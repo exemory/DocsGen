@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, Inject} from '@angular/core';
 import {AuthService} from "./shared/services/auth.service";
+import {APP_BASE_HREF} from "@angular/common";
 
 @Component({
   selector: 'app-root',

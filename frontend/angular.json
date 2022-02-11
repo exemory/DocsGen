@@ -45,8 +45,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1024kb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -54,6 +54,8 @@
                   "maximumError": "4kb"
                 }
               ],
+              "baseHref": "/",
+              "deployUrl": "/app/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
