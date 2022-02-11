@@ -169,7 +169,7 @@ app.UseWhen(
         app.UseEndpoints(
             endpoints =>
             {
-                endpoints.MapFallbackToFile("app/index.html");
+                endpoints.MapFallbackToFile("index.html");
             });
     });
 
