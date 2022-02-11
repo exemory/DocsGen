@@ -54,8 +54,6 @@
                   "maximumError": "4kb"
                 }
               ],
-              "baseHref": "/",
-              "deployUrl": "/app/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
