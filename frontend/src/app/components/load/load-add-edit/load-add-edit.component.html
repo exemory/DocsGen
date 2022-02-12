@@ -11,10 +11,13 @@
   <div class="form-fields">
     <div class="form-input">
       <label for="type">Тип</label>
-      <input type="number" id="type" placeholder="Тип" formControlName="type">
+      <mat-select formControlName="type" id="type" placeholder="Тип">
+        <mat-option [value]="1">Лекція</mat-option>
+        <mat-option [value]="2">Практика</mat-option>
+      </mat-select>
     </div>
     <div class="form-input">
-      <label for="year">Рік</label>
+      <label for="year">Рік (1-6)</label>
       <input type="number" id="year" placeholder="Рік" formControlName="year">
     </div>
     <div class="form-input">

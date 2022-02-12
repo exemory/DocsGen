@@ -2,9 +2,11 @@
   <h1>Вхід</h1>
 
   <mat-form-field appearance="outline">
-    <mat-label>Пароль</mat-label>
-    <input matInput placeholder="Пароль" [formControl]="password">
-    <mat-icon matSuffix>lock</mat-icon>
+    <mat-label>Введіть пароль</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" [formControl]="password">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Приховати пароль'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
   </mat-form-field>
 
   <button mat-stroked-button color="primary" (click)="onLogin()">Увійти</button>

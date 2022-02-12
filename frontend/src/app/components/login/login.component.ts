@@ -3,6 +3,7 @@ import {FormControl} from "@angular/forms";
 import {AuthService} from "../../shared/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,10 @@ import {first} from "rxjs";
 export class LoginComponent implements OnInit {
   password = new FormControl('');
   loading = false;
+  hide = true;
 
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
+  constructor(private auth: AuthService, private router: Router,
+              private route: ActivatedRoute, private toastr: ToastrService) {
     // redirect to home if already logged in
     if (this.auth.tokenValue) {
       this.router.navigate(['/']);
@@ -32,6 +35,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['']);
         },
         error: error => {
+          if (error.status === 401) this.toastr.error('Невірний пароль!');
           this.loading = false;
         }
       });

@@ -36,7 +36,7 @@ export class TeacherComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('teachers').subscribe({
       next: (data: Teacher[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
   }
@@ -60,7 +60,9 @@ export class TeacherComponent implements OnInit {
 
   remove(id: number): any {
     const selectedTeacher: Teacher = this.dataSource.data.filter(item => item.id === id)[0];
-    const dialogData = new ConfirmDialogModel('Підтвердіть дію', `Ви впевнені, що хочете видалити галузь знань "${selectedTeacher.name}"?`);
+    const dialogData = new ConfirmDialogModel('Підтвердіть дію',
+      `Ви впевнені, що хочете видалити викладача
+       "${selectedTeacher.surname} ${selectedTeacher.name} ${selectedTeacher.patronymic}"?`);
 
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '600px',
@@ -70,7 +72,6 @@ export class TeacherComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`teachers/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);

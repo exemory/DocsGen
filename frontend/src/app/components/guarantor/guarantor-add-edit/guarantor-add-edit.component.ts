@@ -27,7 +27,7 @@ export class GuarantorAddEditComponent implements OnInit {
       surname: new FormControl('', [Validators.required]),
       patronymic: new FormControl('', [Validators.required]),
       academicDegree: new FormControl(''),
-      academicRank: new FormControl(''),
+      academicRank: new FormControl('', [Validators.required]),
       email: new FormControl(''),
       phone: new FormControl('')
     });

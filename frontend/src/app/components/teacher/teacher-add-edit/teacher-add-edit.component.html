@@ -10,32 +10,67 @@
 <form class="form" [formGroup]="form">
   <div class="form-fields">
     <div class="form-input">
-      <label for="name">Ім'я</label>
-      <input type="text" id="name" placeholder="Ім'я" formControlName="name">
+      <mat-form-field appearance="outline">
+        <mat-label>Ім'я</mat-label>
+        <input matInput placeholder="Ім'я" formControlName="name">
+        <mat-error *ngIf="this.form.controls.name.invalid && this.form.controls.name.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="surname">Прізвище</label>
-      <input type="text" id="surname" placeholder="Прізвище" formControlName="surname">
+      <mat-form-field appearance="outline">
+        <mat-label>Прізвище</mat-label>
+        <input matInput placeholder="Прізвище" formControlName="surname">
+        <mat-error *ngIf="this.form.controls.name.invalid && this.form.controls.name.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="patronymic">По-батькові</label>
-      <input type="text" id="patronymic" placeholder="По-батькові" formControlName="patronymic">
+      <mat-form-field appearance="outline">
+        <mat-label>По-батькові</mat-label>
+        <input matInput placeholder="По-батькові" formControlName="patronymic">
+        <mat-error *ngIf="this.form.controls['patronymic'].invalid && this.form.controls['patronymic'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="academicDegree">Академ. ступінь</label>
-      <input type="text" id="academicDegree" placeholder="Академ. ступінь" formControlName="academicDegree">
+      <mat-form-field appearance="outline">
+        <mat-label>Академ. ступінь</mat-label>
+        <input matInput placeholder="Академ. ступінь" formControlName="academicDegree">
+        <mat-error *ngIf="this.form.controls['academicDegree'].invalid && this.form.controls['academicDegree'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="academicRank">Академ. ранг</label>
-      <input type="text" id="academicRank" placeholder="Академ. ранг" formControlName="academicRank">
+      <mat-form-field appearance="outline">
+        <mat-label>Академ. ранг</mat-label>
+        <input matInput placeholder="Академ. ранг" formControlName="academicRank">
+        <mat-error *ngIf="this.form.controls['academicRank'].invalid && this.form.controls['academicRank'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="email">Почта</label>
-      <input type="text" id="email" placeholder="Почта" formControlName="email">
+      <mat-form-field appearance="outline">
+        <mat-label>Телефон</mat-label>
+        <input matInput placeholder="Телефон" formControlName="phone">
+        <mat-error *ngIf="this.form.controls['phone'].invalid && this.form.controls['phone'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="phone">Телефон</label>
-      <input type="text" id="phone" placeholder="Телефон" formControlName="phone">
+      <mat-form-field appearance="outline">
+        <mat-label>Почта</mat-label>
+        <input type="email" matInput placeholder="Почта" formControlName="email">
+        <mat-error *ngIf="this.form.controls['email'].invalid && this.form.controls['email'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
 

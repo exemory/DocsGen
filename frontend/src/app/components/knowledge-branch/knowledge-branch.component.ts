@@ -36,7 +36,7 @@ export class KnowledgeBranchComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('knowledge-branches').subscribe({
       next: (data: KnowledgeBranch[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
   }
@@ -60,7 +60,8 @@ export class KnowledgeBranchComponent implements OnInit {
 
   remove(id: number): any {
     const selectedBranch: KnowledgeBranch = this.dataSource.data.filter(item => item.id === id)[0];
-    const dialogData = new ConfirmDialogModel('Підтвердіть дію', `Ви впевнені, що хочете видалити галузь знань "${selectedBranch.name}"?`);
+    const dialogData = new ConfirmDialogModel('Підтвердіть дію',
+      `Ви впевнені, що хочете видалити галузь знань "${selectedBranch.name}"?`);
 
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '600px',
@@ -70,7 +71,6 @@ export class KnowledgeBranchComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`knowledge-branches/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);

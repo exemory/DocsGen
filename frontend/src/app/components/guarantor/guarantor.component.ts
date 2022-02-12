@@ -61,7 +61,8 @@ export class GuarantorComponent implements OnInit {
   remove(id: number): any {
     const selectedGuarantor: Guarantor = this.dataSource.data.filter(item => item.id === id)[0];
     const dialogData = new ConfirmDialogModel('Підтвердіть дію',
-      `Ви впевнені, що хочете видалити гаранта "${selectedGuarantor.name}"?`);
+      `Ви впевнені, що хочете видалити гаранта
+       "${selectedGuarantor.surname} ${selectedGuarantor.name} ${selectedGuarantor.patronymic}"?`);
 
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '600px',

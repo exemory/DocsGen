@@ -33,8 +33,8 @@ export class LoadAddEditComponent implements OnInit {
     this.isAddMode = !this.id;
 
     this.form = new FormGroup({
-      type: new FormControl([Validators.required]),
-      year: new FormControl( [Validators.required]),
+      type: new FormControl(null, [Validators.required]),
+      year: new FormControl( null, [Validators.required, Validators.min(1), Validators.max(6)]),
       teacherId: new FormControl(),
       subjectId: new FormControl(),
       specialtyId: new FormControl(),
@@ -56,6 +56,7 @@ export class LoadAddEditComponent implements OnInit {
   }
 
   create(): any {
+    console.log(this.form)
     if (!this.form.invalid) {
       this.http.post('teacher-loads', {
         type: this.form.controls['type'].value,

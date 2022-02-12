@@ -25,7 +25,6 @@ import {MatPaginatorIntl} from "@angular/material/paginator";
 import {getDutchPaginatorIntl} from "./shared/helpers/dutch-paginator-intl";
 import {ToastrModule} from "ngx-toastr";
 import {LoginComponent} from './components/login/login.component';
-import {ErrorInterceptor} from "./shared/helpers/error.interceptor";
 import {JwtInterceptor} from "./shared/helpers/jwt.interceptor";
 import {TeacherAddEditComponent} from './components/teacher/teacher-add-edit/teacher-add-edit.component';
 import {HeadAddEditComponent} from './components/head/head-add-edit/head-add-edit.component';
@@ -33,7 +32,6 @@ import {GuarantorAddEditComponent} from './components/guarantor/guarantor-add-ed
 import {SubjectAddEditComponent} from './components/subject/subject-add-edit/subject-add-edit.component';
 import {SyllabusAddEditComponent} from './components/syllabus/syllabus-add-edit/syllabus-add-edit.component';
 import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edit.component';
-import {APP_BASE_HREF} from "@angular/common";
 
 
 @NgModule({
@@ -74,7 +72,6 @@ import {APP_BASE_HREF} from "@angular/common";
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()},
   ],
   bootstrap: [AppComponent]

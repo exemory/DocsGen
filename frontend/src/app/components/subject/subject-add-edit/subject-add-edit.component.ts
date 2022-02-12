@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "../../../shared/services/http.service";
@@ -41,7 +41,13 @@ export class SubjectAddEditComponent implements OnInit {
         name: this.form.controls['name'].value
       }).subscribe({
         next: data => null,
-        error: err => this.toastr.error(err.message),
+        error: err => {
+          if (err.status === 409) {
+            this.toastr.error('Данний предмет вже існує!')
+          } else {
+            this.toastr.error(err.message)
+          }
+        },
         complete: () => {
           this.toastr.success('', 'Успішно створено');
           this.router.navigate(['subject']);
@@ -57,7 +63,13 @@ export class SubjectAddEditComponent implements OnInit {
         name: this.form.controls['name'].value
       }).subscribe({
         next: data => null,
-        error: err => this.toastr.error(err.message),
+        error: err => {
+          if (err.status === 409) {
+            this.toastr.error('Предмет з такаю назвою вже існує!')
+          } else {
+            this.toastr.error(err.message)
+          }
+        },
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
           this.router.navigate(['subject']);

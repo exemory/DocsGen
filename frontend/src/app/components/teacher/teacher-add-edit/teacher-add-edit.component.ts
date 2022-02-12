@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "../../../shared/services/http.service";
@@ -27,7 +27,7 @@ export class TeacherAddEditComponent implements OnInit {
       surname: new FormControl('', [Validators.required]),
       patronymic: new FormControl('', [Validators.required]),
       academicDegree: new FormControl(''),
-      academicRank: new FormControl(''),
+      academicRank: new FormControl('', [Validators.required]),
       email: new FormControl(''),
       phone: new FormControl('')
     });
@@ -42,17 +42,8 @@ export class TeacherAddEditComponent implements OnInit {
   }
 
   create(): any {
-    if (!this.form.invalid) {
-      this.http.post('teachers', {
-        name: this.form.controls['name'].value,
-        surname: this.form.controls['surname'].value,
-        patronymic: this.form.controls['patronymic'].value,
-        academicDegree: this.form.controls['academicDegree'].value,
-        academicRank: this.form.controls['academicRank'].value,
-        email: this.form.controls['email'].value,
-        phone: this.form.controls['phone'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.post('teachers', this.form.value).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно створено');
@@ -63,18 +54,8 @@ export class TeacherAddEditComponent implements OnInit {
   }
 
   edit(): any {
-    if (!this.form.invalid) {
-      this.http.put(`teachers/${this.id}`, {
-        id: this.id,
-        name: this.form.controls['name'].value,
-        surname: this.form.controls['surname'].value,
-        patronymic: this.form.controls['patronymic'].value,
-        academicDegree: this.form.controls['academicDegree'].value,
-        academicRank: this.form.controls['academicRank'].value,
-        email: this.form.controls['email'].value,
-        phone: this.form.controls['phone'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.put(`teachers/${this.id}`, {...this.form.value, id: this.id}).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
@@ -82,5 +63,9 @@ export class TeacherAddEditComponent implements OnInit {
         }
       });
     }
+  }
+
+  getErrorMessage() {
+    return "Це поле обов'якзкове";
   }
 }

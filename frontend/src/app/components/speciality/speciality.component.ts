@@ -13,8 +13,7 @@ import {
 import {Specialty} from "../../shared/interfaces/specialty";
 import {FormControl} from "@angular/forms";
 import {KnowledgeBranch} from "../../shared/interfaces/knowledge-branch";
-import {map, Observable, startWith} from "rxjs";
-import {MatAutocompleteTrigger} from "@angular/material/autocomplete";
+
 
 @Component({
   selector: 'app-speciality',
@@ -43,7 +42,7 @@ export class SpecialityComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('specialties').subscribe({
       next: (data: Specialty[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
 
@@ -58,13 +57,13 @@ export class SpecialityComponent implements OnInit {
     if(this.selectedBranch.value) {
       this.http.get(`specialties?branch-id=${this.selectedBranch.value}`).subscribe({
         next: (data: Specialty[]) => this.dataSource.data = data,
-        error: (e) => console.error(e),
+        error: err => this.toastr.error(err.message),
         complete: () => this.isLoading = false
       })
     } else {
       this.http.get('specialties').subscribe({
         next: (data: Specialty[]) => this.dataSource.data = data,
-        error: (e) => console.error(e),
+        error: err => this.toastr.error(err.message),
         complete: () => this.isLoading = false
       })
     }
@@ -96,7 +95,6 @@ export class SpecialityComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`specialties/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);

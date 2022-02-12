@@ -33,9 +33,9 @@ export class SpecialityAddEditComponent implements OnInit {
     this.form = new FormGroup({
       code: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
-      knowledgeBranchId: new FormControl(''),
-      headOfSmcId: new FormControl(''),
-      guarantorId: new FormControl('')
+      knowledgeBranchId: new FormControl(null, [Validators.required]),
+      headOfSmcId: new FormControl(null, [Validators.required]),
+      guarantorId: new FormControl(null, [Validators.required])
     });
 
     if (!this.isAddMode) {
@@ -48,17 +48,13 @@ export class SpecialityAddEditComponent implements OnInit {
   }
 
   create(): any {
-    console.log(this.form);
-    if (!this.form.invalid) {
-      this.http.post('specialties', {
-        code: this.form.controls['code'].value,
-        name: this.form.controls['name'].value,
-        knowledgeBranchId: this.form.controls['knowledgeBranchId'].value,
-        headOfSmcId: this.form.controls['headOfSmcId'].value,
-        guarantorId: this.form.controls['guarantorId'].value,
-      }).subscribe({
-        next: data => null,
-        error: err => this.toastr.error(err),
+    if (this.form.valid) {
+      this.http.post('specialties', this.form.value).subscribe({
+        error: err => {
+          if (err.status === 409) {
+            this.toastr.error('Спеціальність з таким шифром або гарантом вже існує!')
+          } else this.toastr.error(err.message);
+        },
         complete: () => {
           this.toastr.success('', 'Успішно створено');
           this.router.navigate(['speciality']);
@@ -68,18 +64,13 @@ export class SpecialityAddEditComponent implements OnInit {
   }
 
   edit(): any {
-    console.log(this.form);
-    if (!this.form.invalid) {
-      this.http.put(`specialties/${this.id}`, {
-        id: this.id,
-        code: this.form.controls['code'].value,
-        name: this.form.controls['name'].value,
-        knowledgeBranchId: this.form.controls['knowledgeBranchId'].value,
-        headOfSmcId: this.form.controls['headOfSmcId'].value,
-        guarantorId: this.form.controls['guarantorId'].value,
-      }).subscribe({
-        next: data => null,
-        error: err => this.toastr.error(err.message),
+    if (this.form.valid) {
+      this.http.put(`specialties/${this.id}`, {...this.form.value, id: this.id}).subscribe({
+        error: err => {
+          if (err.status === 409) {
+            this.toastr.error('Спеціальність з таким шифром або гарантом вже існує!')
+          } else this.toastr.error(err.message);
+        },
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
           this.router.navigate(['speciality']);
@@ -90,5 +81,9 @@ export class SpecialityAddEditComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['speciality']);
+  }
+
+  getErrorMessage() {
+    return "Це поле обов'якзкове";
   }
 }

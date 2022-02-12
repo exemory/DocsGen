@@ -11,7 +11,6 @@ export class HttpService {
   apiURL: string = environment.apiURL;
 
   constructor(private http: HttpClient) {
-    console.log(this.apiURL)
   }
 
   // Http Options
@@ -26,7 +25,6 @@ export class HttpService {
   }
 
   post(apiRoute: string, body: any): Observable<any> {
-    console.log(`${this.apiURL + apiRoute}`);
     return this.http.post(`${this.apiURL + apiRoute}`, body, this.httpOptions);
   }
 

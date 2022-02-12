@@ -10,12 +10,22 @@
 <form class="form" [formGroup]="form">
   <div class="form-fields">
     <div class="form-input">
-      <label for="code">Шифр галузі</label>
-      <input type="text" id="code" placeholder="Шифр галузі" formControlName="code">
+      <mat-form-field appearance="outline">
+        <mat-label>Шифр галузі</mat-label>
+        <input matInput placeholder="Шифр галузі" formControlName="code">
+        <mat-error *ngIf="this.form.controls.code.invalid && this.form.controls.code.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="name">Назва галузі</label>
-      <input type="text" id="name" placeholder="Назва галузі" formControlName="name">
+      <mat-form-field appearance="outline">
+        <mat-label>Назва галузі</mat-label>
+        <input matInput placeholder="Назва галузі" formControlName="name">
+        <mat-error *ngIf="this.form.controls.name.invalid && this.form.controls.name.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
 

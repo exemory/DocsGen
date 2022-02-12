@@ -61,7 +61,9 @@ export class HeadComponent implements OnInit {
 
   remove(id: number): any {
     const selectedHead: HeadOfSMC = this.dataSource.data.filter(item => item.id === id)[0];
-    const dialogData = new ConfirmDialogModel('Підтвердіть дію', `Ви впевнені, що хочете видалити галузь знань "${selectedHead.name}"?`);
+    const dialogData = new ConfirmDialogModel('Підтвердіть дію',
+      `Ви впевнені, що хочете видалити голову
+       "${selectedHead.surname} ${selectedHead.name} ${selectedHead.patronymic}"?`);
 
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '600px',

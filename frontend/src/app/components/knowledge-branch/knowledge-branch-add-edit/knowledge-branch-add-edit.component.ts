@@ -37,13 +37,13 @@ export class KnowledgeBranchAddEditComponent implements OnInit {
   }
 
   create(): any {
-    if (!this.form.invalid) {
-      this.http.post('knowledge-branches', {
-        code: this.form.controls['code'].value,
-        name: this.form.controls['name'].value
-      }).subscribe({
-        next: data => null,
-        error: err => this.toastr.error(err.message),
+    if (this.form.valid) {
+      this.http.post('knowledge-branches', this.form.value).subscribe({
+        error: err => {
+          if (err.status === 409) {
+            this.toastr.error('Галузь знань з таким шифром вже існує!')
+          } else this.toastr.error(err.message);
+        },
         complete: () => {
           this.toastr.success('', 'Успішно створено');
           this.router.navigate(['knowledge-branch']);
@@ -53,19 +53,22 @@ export class KnowledgeBranchAddEditComponent implements OnInit {
   }
 
   edit(): any {
-    if (!this.form.invalid) {
-      this.http.put(`knowledge-branches/${this.id}`, {
-        id: this.id,
-        code: this.form.controls['code'].value,
-        name: this.form.controls['name'].value
-      }).subscribe({
-        next: data => null,
-        error: err => this.toastr.error(err.message),
+    if (this.form.valid) {
+      this.http.put(`knowledge-branches/${this.id}`, {...this.form.value, id: this.id}).subscribe({
+        error: err => {
+          if (err.status === 409) {
+            this.toastr.error('Галузь знань з таким шифром вже існує!')
+          } else this.toastr.error(err.message);
+        },
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
           this.router.navigate(['knowledge-branch']);
         }
       });
     }
+  }
+
+  getErrorMessage() {
+    return "Це поле обов'якзкове";
   }
 }

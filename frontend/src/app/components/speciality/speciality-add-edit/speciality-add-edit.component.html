@@ -10,40 +10,65 @@
 <form class="form" [formGroup]="form">
   <div class="form-fields">
     <div class="form-input">
-      <label for="code">Шифр</label>
-      <input type="text" id="code" placeholder="Шифр галузі" formControlName="code">
+      <mat-form-field appearance="outline">
+        <mat-label>Шифр спеціальності</mat-label>
+        <input matInput placeholder="Шифр спеціальності" formControlName="code">
+        <mat-error *ngIf="this.form.controls.code.invalid && this.form.controls.code.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="form-input">
-      <label for="name">Назва</label>
-      <input type="text" id="name" placeholder="Назва галузі" formControlName="name">
+      <mat-form-field appearance="outline">
+        <mat-label>Назва спеціальності</mat-label>
+        <input matInput placeholder="Назва спеціальності" formControlName="name">
+        <mat-error *ngIf="this.form.controls.name.invalid && this.form.controls.name.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="form-input">
-      <label for="knowledgeBranch">Галузь знань</label>
-      <mat-select formControlName="knowledgeBranchId" id="knowledgeBranch" placeholder="Назва галузі">
-        <mat-option *ngFor="let branch of knowledgeBranches" [value]="branch.id">
-          {{branch.code}} {{branch.name}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Галузь спеціальності</mat-label>
+        <mat-select placeholder="Галузь спеціальності" formControlName="knowledgeBranchId">
+          <mat-option *ngFor="let branch of knowledgeBranches" [value]="branch.id">
+            {{branch.code}} {{branch.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.form.controls.knowledgeBranchId.invalid && this.form.controls.knowledgeBranchId.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="form-input">
-      <label for="headOfSMC">Голова</label>
-      <mat-select formControlName="headOfSmcId" id="headOfSMC" placeholder="Голова галузі">
-        <mat-option *ngFor="let head of headsOfSMC" [value]="head.id">
-          {{head.surname}} {{head.name}} {{head.patronymic}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Голова спеціальності</mat-label>
+        <mat-select placeholder="Голова спеціальності" formControlName="headOfSmcId">
+          <mat-option *ngFor="let head of headsOfSMC" [value]="head.id">
+            {{head.surname}} {{head.name}} {{head.patronymic}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.form.controls['headOfSmcId'].invalid && this.form.controls['headOfSmcId'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="form-input">
-      <label for="guarantor">Гарант</label>
-      <mat-select formControlName="guarantorId" id="guarantor" placeholder="Гарант галузі">
-        <mat-option *ngFor="let guarantor of guarantors" [value]="guarantor.id">
-          {{guarantor.surname}} {{guarantor.name}} {{guarantor.patronymic}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Гарант спеціальності</mat-label>
+        <mat-select placeholder="Гарант спеціальності" formControlName="guarantorId">
+          <mat-option *ngFor="let guarantor of guarantors" [value]="guarantor.id">
+            {{guarantor.surname}} {{guarantor.name}} {{guarantor.patronymic}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.form.controls['guarantorId'].invalid && this.form.controls['guarantorId'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
 
