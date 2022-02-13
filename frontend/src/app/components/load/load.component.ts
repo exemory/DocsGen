@@ -6,7 +6,6 @@ import {ToastrService} from "ngx-toastr";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {Syllabus} from "../../shared/interfaces/syllabus";
 import {
   ConfirmDialogModel,
   DialogConfirmComponent
@@ -46,7 +45,7 @@ export class LoadComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('teacher-loads').subscribe({
       next: (data: Load[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
 
@@ -84,7 +83,6 @@ export class LoadComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`teacher-loads/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);
@@ -102,11 +100,11 @@ export class LoadComponent implements OnInit {
 
   getSubject(id: number): string {
     const subject: Subject | undefined = this.subjects.find(subject => subject.id == id);
-    return subject!.name;
+    return `${subject?.name}`;
   }
 
   getSpeciality(id: number): string {
     const specialty: Specialty | undefined = this.specialties.find(specialty => specialty.id == id);
-    return specialty!.name;
+    return `${specialty?.name}`;
   }
 }

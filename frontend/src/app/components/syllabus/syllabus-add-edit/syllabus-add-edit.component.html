@@ -10,52 +10,112 @@
 <form class="form" [formGroup]="form">
   <div class="form-fields">
     <div class="form-input">
-      <label for="credits">Кредити</label>
-      <input type="text" id="credits" placeholder="Кредити" formControlName="credits">
+      <mat-form-field appearance="outline">
+        <mat-label>Кредити</mat-label>
+        <input matInput placeholder="Кредити" formControlName="credits">
+        <mat-error *ngIf="this.form.controls['credits'].invalid && this.form.controls['credits'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="totalHours">Всього годин</label>
-      <input type="number" id="totalHours" placeholder="Всього годин" formControlName="totalHours">
+      <mat-form-field appearance="outline">
+        <mat-label>Всього годин</mat-label>
+        <input type="number" matInput placeholder="Всього годин" formControlName="totalHours">
+        <mat-error *ngIf="this.form.controls['totalHours'].invalid && this.form.controls['totalHours'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="classroomHours">Класні години</label>
-      <input type="number" id="classroomHours" placeholder="Класні години" formControlName="classroomHours">
+      <mat-form-field appearance="outline">
+        <mat-label>Класні години</mat-label>
+        <input type="number" matInput placeholder="Класні години" formControlName="classroomHours">
+        <mat-error *ngIf="this.form.controls['classroomHours'].invalid && this.form.controls['classroomHours'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="lectureHours">Лекційні години</label>
-      <input type="number" id="lectureHours" placeholder="Лекційні години" formControlName="lectureHours">
+      <mat-form-field appearance="outline">
+        <mat-label>Лекційні години</mat-label>
+        <input type="number" matInput placeholder="Лекційні години" formControlName="lectureHours">
+        <mat-error *ngIf="this.form.controls['lectureHours'].invalid && this.form.controls['lectureHours'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="labHours">Лабораторних годин</label>
-      <input type="number" id="labHours" placeholder="Лабораторних годин" formControlName="labHours">
+      <mat-form-field appearance="outline">
+        <mat-label>Лабораторних годин</mat-label>
+        <input type="number" matInput placeholder="Лабораторних годин" formControlName="labHours">
+        <mat-error *ngIf="this.form.controls['labHours'].invalid && this.form.controls['labHours'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="practicalHours">Практичні години</label>
-      <input type="number" id="practicalHours" placeholder="Практичні години" formControlName="practicalHours">
+      <mat-form-field appearance="outline">
+        <mat-label>Практичні години</mat-label>
+        <input type="number" matInput placeholder="Практичні години" formControlName="practicalHours">
+        <mat-error *ngIf="this.form.controls['practicalHours'].invalid && this.form.controls['practicalHours'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="courseProjects">Курсові проекти</label>
-      <input type="number" id="courseProjects" placeholder="Курсові проекти" formControlName="courseProjects">
+      <mat-form-field appearance="outline">
+        <mat-label>Курсові проекти</mat-label>
+        <input type="number" matInput placeholder="Курсові проекти" formControlName="courseProjects">
+        <mat-error *ngIf="this.form.controls['courseProjects'].invalid && this.form.controls['courseProjects'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="courseWork">Курсова робота</label>
-      <input type="number" id="courseWork" placeholder="Курсова робота" formControlName="courseWork">
+      <mat-form-field appearance="outline">
+        <mat-label>Курсова робота</mat-label>
+        <input type="number" matInput placeholder="Курсова робота" formControlName="courseWork">
+        <mat-error *ngIf="this.form.controls['courseWork'].invalid && this.form.controls['courseWork'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="rgr">rgr</label>
-      <input type="number" id="rgr" placeholder="rgr" formControlName="rgr">
+      <mat-form-field appearance="outline">
+        <mat-label>rgr</mat-label>
+        <input type="number" matInput placeholder="rgr" formControlName="rgr">
+        <mat-error *ngIf="this.form.controls['rgr'].invalid && this.form.controls['rgr'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="r">r</label>
-      <input type="number" id="r" placeholder="r" formControlName="r">
+      <mat-form-field appearance="outline">
+        <mat-label>r</mat-label>
+        <input type="number" matInput placeholder="r" formControlName="r">
+        <mat-error *ngIf="this.form.controls['r'].invalid && this.form.controls['r'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="formOfControl">Форма контролю</label>
-      <input type="text" id="formOfControl" placeholder="Форма контролю" formControlName="formOfControl">
+      <mat-form-field appearance="outline">
+        <mat-label>Форма контролю</mat-label>
+        <input matInput placeholder="Форма контролю" formControlName="formOfControl">
+        <mat-error *ngIf="this.form.controls['formOfControl'].invalid && this.form.controls['formOfControl'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="semester">Семестр</label>
-      <input type="number" id="semester" placeholder="Семестр" formControlName="semester">
+      <mat-form-field appearance="outline">
+        <mat-label>Семестр</mat-label>
+        <input type="number" matInput placeholder="Семестр" formControlName="semester">
+        <mat-error *ngIf="this.form.controls['semester'].invalid && this.form.controls['semester'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
 

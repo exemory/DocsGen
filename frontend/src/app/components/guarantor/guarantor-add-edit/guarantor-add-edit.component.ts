@@ -42,17 +42,8 @@ export class GuarantorAddEditComponent implements OnInit {
   }
 
   create(): any {
-    if (!this.form.invalid) {
-      this.http.post('guarantors', {
-        name: this.form.controls['name'].value,
-        surname: this.form.controls['surname'].value,
-        patronymic: this.form.controls['patronymic'].value,
-        academicDegree: this.form.controls['academicDegree'].value,
-        academicRank: this.form.controls['academicRank'].value,
-        email: this.form.controls['email'].value,
-        phone: this.form.controls['phone'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.post('guarantors', this.form.value).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно створено');
@@ -63,18 +54,8 @@ export class GuarantorAddEditComponent implements OnInit {
   }
 
   edit(): any {
-    if (!this.form.invalid) {
-      this.http.put(`guarantors/${this.id}`, {
-        id: this.id,
-        name: this.form.controls['name'].value,
-        surname: this.form.controls['surname'].value,
-        patronymic: this.form.controls['patronymic'].value,
-        academicDegree: this.form.controls['academicDegree'].value,
-        academicRank: this.form.controls['academicRank'].value,
-        email: this.form.controls['email'].value,
-        phone: this.form.controls['phone'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.put(`guarantors/${this.id}`, {...this.form.value, id: this.id}).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
@@ -82,5 +63,9 @@ export class GuarantorAddEditComponent implements OnInit {
         }
       });
     }
+  }
+
+  getErrorMessage() {
+    return "Це поле обов'якзкове";
   }
 }

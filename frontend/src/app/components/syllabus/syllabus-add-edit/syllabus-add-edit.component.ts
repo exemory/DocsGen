@@ -47,22 +47,8 @@ export class SyllabusAddEditComponent implements OnInit {
   }
 
   create(): any {
-    if (!this.form.invalid) {
-      this.http.post('syllabuses', {
-        credits: this.form.controls['credits'].value,
-        totalHours: this.form.controls['totalHours'].value,
-        classroomHours: this.form.controls['classroomHours'].value,
-        lectureHours: this.form.controls['lectureHours'].value,
-        labHours: this.form.controls['labHours'].value,
-        practicalHours: this.form.controls['practicalHours'].value,
-        courseProjects: this.form.controls['courseProjects'].value,
-        courseWork: this.form.controls['courseWork'].value,
-        rgr: this.form.controls['rgr'].value,
-        r: this.form.controls['r'].value,
-        formOfControl: this.form.controls['formOfControl'].value,
-        semester: this.form.controls['semester'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.post('syllabuses', this.form.value).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно створено');
@@ -73,23 +59,8 @@ export class SyllabusAddEditComponent implements OnInit {
   }
 
   edit(): any {
-    if (!this.form.invalid) {
-      this.http.put(`syllabuses/${this.id}`, {
-        id: this.id,
-        credits: this.form.controls['credits'].value,
-        totalHours: this.form.controls['totalHours'].value,
-        classroomHours: this.form.controls['classroomHours'].value,
-        lectureHours: this.form.controls['lectureHours'].value,
-        labHours: this.form.controls['labHours'].value,
-        practicalHours: this.form.controls['practicalHours'].value,
-        courseProjects: this.form.controls['courseProjects'].value,
-        courseWork: this.form.controls['courseWork'].value,
-        rgr: this.form.controls['rgr'].value,
-        r: this.form.controls['r'].value,
-        formOfControl: this.form.controls['formOfControl'].value,
-        semester: this.form.controls['semester'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.put(`syllabuses/${this.id}`, {...this.form.value, id: this.id}).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
@@ -97,5 +68,9 @@ export class SyllabusAddEditComponent implements OnInit {
         }
       });
     }
+  }
+
+  getErrorMessage() {
+    return "Це поле обов'якзкове";
   }
 }

@@ -36,7 +36,7 @@ export class GuarantorComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('guarantors').subscribe({
       next: (data: Guarantor[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
   }
@@ -72,7 +72,6 @@ export class GuarantorComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`guarantors/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);

@@ -36,7 +36,7 @@ export class SubjectComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('subjects').subscribe({
       next: (data: Subject[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
   }
@@ -71,7 +71,6 @@ export class SubjectComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`subjects/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);

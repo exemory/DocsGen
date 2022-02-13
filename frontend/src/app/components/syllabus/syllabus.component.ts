@@ -6,7 +6,6 @@ import {ToastrService} from "ngx-toastr";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {Teacher} from "../../shared/interfaces/teacher";
 import {
   ConfirmDialogModel,
   DialogConfirmComponent
@@ -35,13 +34,13 @@ export class SyllabusComponent implements OnInit {
   displayedColumns: string[] = [
     'credits', 'totalHours', 'classroomHours',
     'lectureHours', 'labHours', 'practicalHours',
-    'courseProjects', 'courseWork', 'details'
+    'courseProjects', 'courseWork', 'formOfControl', 'details'
   ];
 
   ngOnInit(): void {
     this.http.get('syllabuses').subscribe({
       next: (data: Syllabus[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
   }
@@ -75,7 +74,6 @@ export class SyllabusComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`syllabuses/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);

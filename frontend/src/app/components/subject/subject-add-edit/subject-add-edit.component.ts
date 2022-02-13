@@ -36,17 +36,12 @@ export class SubjectAddEditComponent implements OnInit {
   }
 
   create(): any {
-    if (!this.form.invalid) {
-      this.http.post('subjects', {
-        name: this.form.controls['name'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.post('subjects', this.form.value).subscribe({
         error: err => {
           if (err.status === 409) {
-            this.toastr.error('Данний предмет вже існує!')
-          } else {
-            this.toastr.error(err.message)
-          }
+            this.toastr.error('Данний предмет вже існує!');
+          } else this.toastr.error(err.message);
         },
         complete: () => {
           this.toastr.success('', 'Успішно створено');
@@ -57,18 +52,12 @@ export class SubjectAddEditComponent implements OnInit {
   }
 
   edit(): any {
-    if (!this.form.invalid) {
-      this.http.put(`subjects/${this.id}`, {
-        id: this.id,
-        name: this.form.controls['name'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.put(`subjects/${this.id}`, {...this.form.value, id: this.id}).subscribe({
         error: err => {
           if (err.status === 409) {
-            this.toastr.error('Предмет з такаю назвою вже існує!')
-          } else {
-            this.toastr.error(err.message)
-          }
+            this.toastr.error('Предмет з такаю назвою вже існує!');
+          } else this.toastr.error(err.message);
         },
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
@@ -76,5 +65,9 @@ export class SubjectAddEditComponent implements OnInit {
         }
       });
     }
+  }
+
+  getErrorMessage() {
+    return "Це поле обов'якзкове";
   }
 }

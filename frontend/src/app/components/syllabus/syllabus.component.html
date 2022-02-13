@@ -68,6 +68,11 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Курсова робота</th>
           <td mat-cell *matCellDef="let element">{{element.courseWork}}</td>
         </ng-container>
+        <!-- formOfControl Column -->
+        <ng-container matColumnDef="formOfControl">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Форма контролю</th>
+          <td mat-cell *matCellDef="let element">{{element.formOfControl}}</td>
+        </ng-container>
         <!-- Details Column -->
         <ng-container matColumnDef="details">
           <th mat-header-cell *matHeaderCellDef></th>

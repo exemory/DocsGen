@@ -3,12 +3,10 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpService} from "../../../shared/services/http.service";
 import {ToastrService} from "ngx-toastr";
-import {KnowledgeBranch} from "../../../shared/interfaces/knowledge-branch";
-import {Guarantor} from "../../../shared/interfaces/guarantor";
-import {HeadOfSMC} from "../../../shared/interfaces/headOfSMC";
 import {Teacher} from "../../../shared/interfaces/teacher";
 import {Subject} from "../../../shared/interfaces/subject";
 import {Specialty} from "../../../shared/interfaces/specialty";
+import {Syllabus} from "../../../shared/interfaces/syllabus";
 
 @Component({
   selector: 'app-load-add-edit',
@@ -22,7 +20,7 @@ export class LoadAddEditComponent implements OnInit {
   teachers: Teacher[] = [];
   subjects: Subject[] = [];
   specialties: Specialty[] = [];
-  syllabuses: Specialty[] = [];
+  syllabuses: Syllabus[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute,
               private http: HttpService, private toastr: ToastrService) {
@@ -56,17 +54,8 @@ export class LoadAddEditComponent implements OnInit {
   }
 
   create(): any {
-    console.log(this.form)
-    if (!this.form.invalid) {
-      this.http.post('teacher-loads', {
-        type: this.form.controls['type'].value,
-        year: this.form.controls['year'].value,
-        teacherId: this.form.controls['teacherId'].value,
-        subjectId: this.form.controls['subjectId'].value,
-        specialtyId: this.form.controls['specialtyId'].value,
-        syllabusId: this.form.controls['syllabusId'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.post('teacher-loads', this.form.value).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно створено');
@@ -77,17 +66,8 @@ export class LoadAddEditComponent implements OnInit {
   }
 
   edit(): any {
-    if (!this.form.invalid) {
-      this.http.put(`teacher-loads/${this.id}`, {
-        id: this.id,
-        type: this.form.controls['type'].value,
-        year: this.form.controls['year'].value,
-        teacherId: this.form.controls['teacherId'].value,
-        subjectId: this.form.controls['subjectId'].value,
-        specialtyId: this.form.controls['specialtyId'].value,
-        syllabusId: this.form.controls['syllabusId'].value
-      }).subscribe({
-        next: data => null,
+    if (this.form.valid) {
+      this.http.put(`teacher-loads/${this.id}`, {...this.form.value, id: this.id}).subscribe({
         error: err => this.toastr.error(err.message),
         complete: () => {
           this.toastr.success('', 'Успішно редаговано');
@@ -95,5 +75,9 @@ export class LoadAddEditComponent implements OnInit {
         }
       });
     }
+  }
+
+  getErrorMessage() {
+    return "Це поле обов'якзкове";
   }
 }

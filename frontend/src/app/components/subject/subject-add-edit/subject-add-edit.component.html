@@ -10,8 +10,13 @@
 <form class="form" [formGroup]="form">
   <div class="form-fields">
     <div class="form-input">
-      <label for="name">Назва предмета</label>
-      <input type="text" id="name" placeholder="Назва галузі" formControlName="name">
+      <mat-form-field appearance="outline">
+        <mat-label>Назва предмета</mat-label>
+        <input matInput placeholder="Назва предмета" formControlName="name">
+        <mat-error *ngIf="this.form.controls.name.invalid && this.form.controls.name.touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
 

@@ -10,47 +10,65 @@
 <form class="form" [formGroup]="form">
   <div class="form-fields">
     <div class="form-input">
-      <label for="type">Тип</label>
-      <mat-select formControlName="type" id="type" placeholder="Тип">
-        <mat-option [value]="1">Лекція</mat-option>
-        <mat-option [value]="2">Практика</mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Тип</mat-label>
+        <mat-select formControlName="type" placeholder="Тип">
+          <mat-option [value]="1">Лекція</mat-option>
+          <mat-option [value]="2">Практика</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="year">Рік (1-6)</label>
-      <input type="number" id="year" placeholder="Рік" formControlName="year">
+      <mat-form-field appearance="outline">
+        <mat-label>Рік</mat-label>
+        <input type="number" matInput placeholder="Рік" formControlName="year">
+        <mat-hint>1-6</mat-hint>
+        <mat-error *ngIf="this.form.controls['year'].invalid && this.form.controls['year'].touched">
+          {{getErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="teacherId">Викладач</label>
-      <mat-select formControlName="teacherId" id="teacherId" placeholder="Викладач">
-        <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
-          {{teacher.surname}} {{teacher.name}}  {{teacher.patronymic}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Викладач</mat-label>
+        <mat-select formControlName="teacherId" placeholder="Викладач">
+          <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+            {{teacher.surname}} {{teacher.name}}  {{teacher.patronymic}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="subjectId">Предмет</label>
-      <mat-select formControlName="subjectId" id="subjectId" placeholder="Предмет">
-        <mat-option *ngFor="let subject of subjects" [value]="subject.id">
-          {{subject.name}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Предмет</mat-label>
+        <mat-select formControlName="subjectId" placeholder="Предмет">
+          <mat-option *ngFor="let subject of subjects" [value]="subject.id">
+            {{subject.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="specialtyId">Спеціальність</label>
-      <mat-select formControlName="specialtyId" id="specialtyId" placeholder="Спеціальність">
-        <mat-option *ngFor="let speciality of specialties" [value]="speciality.id">
-          {{speciality.name}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Спеціальність</mat-label>
+        <mat-select formControlName="specialtyId" placeholder="Спеціальність">
+          <mat-option *ngFor="let speciality of specialties" [value]="speciality.id">
+            {{speciality.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="form-input">
-      <label for="syllabusId">Программа</label>
-      <mat-select formControlName="syllabusId" id="syllabusId" placeholder="Программа">
-        <mat-option *ngFor="let syllabus of syllabuses" [value]="syllabus.id">
-          {{syllabus.id}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field appearance="outline">
+        <mat-label>Программа</mat-label>
+        <mat-select formControlName="syllabusId" placeholder="Программа">
+          <mat-option *ngFor="let syllabus of syllabuses" [value]="syllabus.id">
+            {{syllabus.credits}} {{syllabus.totalHours}} {{syllabus.classroomHours}} {{syllabus.lectureHours}}
+            {{syllabus.labHours}} {{syllabus.practicalHours}} {{syllabus.courseProjects}} {{syllabus.courseWork}}
+            {{syllabus.rgr}} {{syllabus.r}} {{syllabus.formOfControl}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 

@@ -37,7 +37,7 @@ export class HeadComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('heads-of-smc').subscribe({
       next: (data: HeadOfSMC[]) => this.dataSource.data = data,
-      error: (e) => console.error(e),
+      error: err => this.toastr.error(err.message),
       complete: () => this.isLoading = false
     })
   }
@@ -73,7 +73,6 @@ export class HeadComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.http.delete(`heads-of-smc/${id}`).subscribe({
-          next: data => null,
           error: err => this.toastr.error(err.message),
           complete: () => {
             this.dataSource.data = this.dataSource.data.filter(item => item.id !== id);
