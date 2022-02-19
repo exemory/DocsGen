@@ -15,6 +15,8 @@ namespace Infrastructure
         public DbSet<Subject> Subjects { get; set; } = null!;
         public DbSet<Syllabus> Syllabuses { get; set; } = null!;
         public DbSet<TeacherLoad> TeacherLoads { get; set; } = null!;
+        
+        public DbSet<Template> Templates { get; set; } = null!;
 
         public UniversityContext(DbContextOptions<UniversityContext> options) : base(options)
         {

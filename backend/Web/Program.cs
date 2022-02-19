@@ -57,7 +57,7 @@ builder.Services.AddSwaggerGen(options =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 
@@ -97,6 +97,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IDataSeedService, DataSeedService>();
 builder.Services.AddScoped<IGuarantorService, GuarantorService>();
 builder.Services.AddScoped<IHeadOfSmcService, HeadOfSmcService>();
 builder.Services.AddScoped<IKnowledgeBranchService, KnowledgeBranchService>();
@@ -105,7 +106,7 @@ builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ISyllabusService, SyllabusService>();
 builder.Services.AddScoped<ITeacherLoadService, TeacherLoadService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
-builder.Services.AddScoped<IDataSeedService, DataSeedService>();
+builder.Services.AddScoped<ITemplateService, TemplateService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

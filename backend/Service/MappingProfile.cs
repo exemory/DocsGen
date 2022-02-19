@@ -31,6 +31,9 @@ namespace Service
 
             CreateMap<TeacherLoad, TeacherLoadDTO>();
             CreateMap<TeacherLoadDTO, TeacherLoad>();
+            
+            CreateMap<Template, TemplateDTO>();
+            CreateMap<TemplateDTO, Template>();
         }
     }
 }
