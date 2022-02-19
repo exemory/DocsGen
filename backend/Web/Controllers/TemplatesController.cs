@@ -25,6 +25,8 @@ namespace Web.Controllers
         /// <response code="400">Validation error</response>
         [HttpPost("upload")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TemplateDTO>> Upload(IFormFile file)
         {
             try

@@ -14,7 +14,7 @@ namespace Service.Services
 
         private string _passwordHash => _config["AdminPasswordHash"];
         private string _jwtSecret => _config["Jwt:Secret"];
-        private int _jwtLifetime => _config.GetValue<int>("Jwt:Lifetime");
+        private TimeSpan _jwtLifetime => _config.GetValue<TimeSpan>("Jwt:Lifetime");
 
         public AuthenticationService(IConfiguration config)
         {
@@ -42,7 +42,7 @@ namespace Service.Services
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecret));
 
             var jwt = new JwtSecurityToken(
-                expires: DateTime.UtcNow.AddHours(_jwtLifetime),
+                expires: DateTime.UtcNow + _jwtLifetime,
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256));
 
             return jwt;
