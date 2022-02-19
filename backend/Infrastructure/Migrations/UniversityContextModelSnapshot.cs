@@ -323,8 +323,8 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
-                    b.Property<DateOnly>("UploadDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UploadDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

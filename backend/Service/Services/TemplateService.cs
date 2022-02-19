@@ -43,7 +43,7 @@ namespace Service.Services
 
                 template = new Template
                 {
-                    UploadDate = DateOnly.FromDateTime(DateTime.Now),
+                    UploadDate = DateTime.UtcNow,
                     Content = stream.ToArray()
                 };
             }

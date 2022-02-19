@@ -16,7 +16,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UploadDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    UploadDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Content = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>

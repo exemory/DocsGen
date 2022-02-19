@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(UniversityContext))]
-    [Migration("20220219094013_AddTemplate")]
+    [Migration("20220219153904_AddTemplate")]
     partial class AddTemplate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -325,8 +325,8 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
-                    b.Property<DateOnly>("UploadDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UploadDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
