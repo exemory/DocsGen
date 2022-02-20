@@ -31,6 +31,8 @@ namespace Infrastructure
 
         public ITeacherLoadRepository TeacherLoads => _repositories[typeof(Specialty)];
 
+        public ITemplateRepository Templates => _repositories[typeof(Template)];
+
         public UnitOfWork(UniversityContext context)
         {
             _context = context;
@@ -43,6 +45,7 @@ namespace Infrastructure
             _repositories[typeof(Subject)] = new SubjectRepository(_context);
             _repositories[typeof(Syllabus)] = new SyllabusRepository(_context);
             _repositories[typeof(TeacherLoad)] = new TeacherLoadRepository(_context);
+            _repositories[typeof(Template)] = new TemplateRepository(_context);
         }
 
         public IRepository<TEntity> Repository<TEntity>()

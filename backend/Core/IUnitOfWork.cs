@@ -21,6 +21,8 @@ namespace Core
 
         public ITeacherLoadRepository TeacherLoads { get; }
 
+        public ITemplateRepository Templates { get; }
+
         public IRepository<TEntity> Repository<TEntity>()
             where TEntity : Entity, new();
 

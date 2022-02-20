@@ -57,7 +57,7 @@ builder.Services.AddSwaggerGen(options =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 
@@ -97,6 +97,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IDataSeedService, DataSeedService>();
 builder.Services.AddScoped<IGuarantorService, GuarantorService>();
 builder.Services.AddScoped<IHeadOfSmcService, HeadOfSmcService>();
 builder.Services.AddScoped<IKnowledgeBranchService, KnowledgeBranchService>();
@@ -105,7 +106,9 @@ builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ISyllabusService, SyllabusService>();
 builder.Services.AddScoped<ITeacherLoadService, TeacherLoadService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
-builder.Services.AddScoped<IDataSeedService, DataSeedService>();
+builder.Services.AddScoped<ITemplateService, TemplateService>();
+
+builder.Services.AddHostedService<CleanupTemplateService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -148,12 +151,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseWhen(
     context => context.Request.Path.StartsWithSegments("/api"),
-    app =>
+    config =>
     {
-        app.UseRouting();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseEndpoints(
+        config.UseRouting();
+        config.UseAuthentication();
+        config.UseAuthorization();
+        config.UseEndpoints(
             endpoints =>
             {
                 endpoints.MapControllers();
@@ -162,11 +165,11 @@ app.UseWhen(
 
 app.UseWhen(
     context => !context.Request.Path.StartsWithSegments("/api"),
-    app =>
+    config =>
     {
-        app.UseStaticFiles();
-        app.UseRouting();
-        app.UseEndpoints(
+        config.UseStaticFiles();
+        config.UseRouting();
+        config.UseEndpoints(
             endpoints =>
             {
                 endpoints.MapFallbackToFile("index.html");
@@ -177,7 +180,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<UniversityContext>();
     var appliedMigrations = context.Database.GetAppliedMigrations();
-    bool isDatabaseNew = !appliedMigrations.Any();
+    var isDatabaseNew = !appliedMigrations.Any();
 
     context.Database.Migrate();
 
