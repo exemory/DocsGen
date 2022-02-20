@@ -3,7 +3,7 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpClient
+  HttpInterceptor
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthService} from "../services/auth.service";
@@ -16,7 +16,6 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // add auth header with jwt if user is logged in and request is to the api url
-    // @ts-ignore
     let token = this.auth.tokenValue;
     const isApiUrl = request.url.startsWith(this.http.apiURL);
     if (token && isApiUrl) {

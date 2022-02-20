@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -20,9 +19,9 @@ import {
 } from "./components/knowledge-branch/knowledge-branch-add-edit/knowledge-branch-add-edit.component";
 import {DialogConfirmComponent} from './shared/components/dialog-confirm/dialog-confirm.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatPaginatorIntl} from "@angular/material/paginator";
-import {getDutchPaginatorIntl} from "./shared/helpers/dutch-paginator-intl";
+import {getUkranianPaginatorIntl} from "./shared/helpers/ukranian-paginator-intl";
 import {ToastrModule} from "ngx-toastr";
 import {LoginComponent} from './components/login/login.component';
 import {JwtInterceptor} from "./shared/helpers/jwt.interceptor";
@@ -32,6 +31,7 @@ import {GuarantorAddEditComponent} from './components/guarantor/guarantor-add-ed
 import {SubjectAddEditComponent} from './components/subject/subject-add-edit/subject-add-edit.component';
 import {SyllabusAddEditComponent} from './components/syllabus/syllabus-add-edit/syllabus-add-edit.component';
 import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edit.component';
+import { DndDirective } from './shared/directives/dnd.directive';
 
 
 @NgModule({
@@ -56,6 +56,7 @@ import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edi
     SubjectAddEditComponent,
     SyllabusAddEditComponent,
     LoadAddEditComponent,
+    DndDirective,
   ],
   imports: [
     BrowserModule,
@@ -68,11 +69,12 @@ import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edi
       timeOut: 2500,
       positionClass: 'toast-bottom-right',
       progressBar: true
-    })
+    }),
+    FormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()},
+    {provide: MatPaginatorIntl, useValue: getUkranianPaginatorIntl()},
   ],
   bootstrap: [AppComponent]
 })

@@ -21,18 +21,22 @@ export class HttpService {
   };
 
   get(apiRoute: string): Observable<any> {
-    return this.http.get(`${this.apiURL + apiRoute}`, this.httpOptions);
+    return this.http.get(this.apiURL + apiRoute, this.httpOptions);
   }
 
   post(apiRoute: string, body: any): Observable<any> {
-    return this.http.post(`${this.apiURL + apiRoute}`, body, this.httpOptions);
+    return this.http.post(this.apiURL + apiRoute, body, this.httpOptions);
+  }
+
+  postWithCustomOptions(apiRoute: string, body: any, options: any): Observable<any> {
+    return this.http.post(this.apiURL + apiRoute, body, options);
   }
 
   put(apiRoute: string, body: any): Observable<any> {
-    return this.http.put(`${this.apiURL + apiRoute}`, body, this.httpOptions);
+    return this.http.put(this.apiURL + apiRoute, body, this.httpOptions);
   }
 
   delete(apiRoute: string): Observable<any> {
-    return this.http.delete(`${this.apiURL + apiRoute}`, this.httpOptions);
+    return this.http.delete(this.apiURL + apiRoute, this.httpOptions);
   }
 }

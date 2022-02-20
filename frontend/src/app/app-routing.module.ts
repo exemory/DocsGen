@@ -20,7 +20,7 @@ import {HeadAddEditComponent} from "./components/head/head-add-edit/head-add-edi
 import {GuarantorAddEditComponent} from "./components/guarantor/guarantor-add-edit/guarantor-add-edit.component";
 import {SubjectAddEditComponent} from "./components/subject/subject-add-edit/subject-add-edit.component";
 import {SyllabusAddEditComponent} from "./components/syllabus/syllabus-add-edit/syllabus-add-edit.component";
-import {LoadAddEditComponent } from "./components/load/load-add-edit/load-add-edit.component";
+import {LoadAddEditComponent} from "./components/load/load-add-edit/load-add-edit.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},

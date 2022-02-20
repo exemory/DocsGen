@@ -1,6 +1,6 @@
 import {MatPaginatorIntl} from '@angular/material/paginator';
 
-const dutchRangeLabel = (page: number, pageSize: number, length: number) => {
+const ukranianRangeLabel = (page: number, pageSize: number, length: number) => {
   if (length === 0 || pageSize === 0) {
     return `0 van ${length}`;
   }
@@ -17,13 +17,13 @@ const dutchRangeLabel = (page: number, pageSize: number, length: number) => {
   return `${startIndex + 1} - ${endIndex} з ${length}`;
 };
 
-export function getDutchPaginatorIntl(): any {
+export function getUkranianPaginatorIntl(): any {
   const paginatorIntl = new MatPaginatorIntl();
 
   paginatorIntl.itemsPerPageLabel = 'Елементів на сторінку:';
   paginatorIntl.nextPageLabel = 'Наступна сторінка';
   paginatorIntl.previousPageLabel = 'Попередня сторінка';
-  paginatorIntl.getRangeLabel = dutchRangeLabel;
+  paginatorIntl.getRangeLabel = ukranianRangeLabel;
 
   return paginatorIntl;
 }

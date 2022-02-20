@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
   private tokenSubject: BehaviorSubject<any>;
-  public token: Observable<any> | undefined;
+  public token: Observable<any>;
 
   constructor(private http: HttpService, private router: Router) {
     // @ts-ignore

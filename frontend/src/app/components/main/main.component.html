@@ -1,1 +1,56 @@
-<p>main works!</p>
+<div class="page-header">
+  <h1>Головна</h1>
+</div>
+
+<div class="wrapper">
+  <div class="container">
+    <div>
+      <!-- dropzone -->
+      <div class="dropzone" appDnd (fileDropped)="onFileDropped($event)">
+        <input type="file" accept=".docx" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event)"/>
+        <mat-icon>cloud_upload</mat-icon>
+        <h3>Перетягніть шаблон сюди або <label for="fileDropRef">Оберіть</label></h3>
+      </div>
+      <!-- file -->
+      <div class="file" *ngIf="file">
+        <img src="assets/images/doc-icon.png" class="icon" alt="doc">
+        <div class="info">
+          <h4 class="name">
+            {{ file?.name }}
+          </h4>
+          <p class="size">{{ formatBytes(file?.size) }}</p>
+          <mat-progress-bar mode="determinate" [value]="progress" *ngIf="progress !== 100">
+          </mat-progress-bar>
+        </div>
+        <mat-icon (click)="deleteFile()" class="delete">delete</mat-icon>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="settings">
+      <!-- Slide-toggle -->
+      <mat-slide-toggle color="primary"
+                        [checked]="teacherControl.disabled"
+                        (change)="teacherControl.disabled ? teacherControl.enable() : teacherControl.disable()">
+        Генерувати для всіх викладачів
+      </mat-slide-toggle>
+      <!-- Autocomplete -->
+      <mat-form-field appearance="outline">
+        <mat-label>Обрати викладача</mat-label>
+        <input type="text"
+               placeholder="Оберіть викладача"
+               matInput
+               [formControl]="teacherControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let teacher of filteredTeachers | async" [value]="teacher">
+            {{teacher.surname}} {{teacher.name}} {{teacher.patronymic}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- Button -->
+      <button mat-raised-button color="primary" (click)="generate()">Генерувати</button>
+    </div>
+  </div>
+</div>
