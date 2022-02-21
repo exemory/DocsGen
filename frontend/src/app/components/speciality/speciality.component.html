@@ -18,14 +18,21 @@
 
     <!-- Select -->
     <div class="select-input">
-      <mat-select  [formControl]="selectedBranch"  placeholder="Оберіть галузь знань" (selectionChange)="onSelect()">
+      <input type="text"
+             placeholder="Оберіть галузь знань"
+             [formControl]="knowledgeBranchControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelect($event.option.value)">
         <mat-option [value]="null">
           Усі спеціальності
         </mat-option>
-        <mat-option *ngFor="let branch of knowledgeBranches" [value]="branch.id">
+        <mat-option *ngFor="let branch of filteredKnowledgeBranches | async" [value]="branch">
           {{branch.code}} {{branch.name}}
         </mat-option>
-      </mat-select>
+      </mat-autocomplete>
+      <button *ngIf="knowledgeBranchControl" matSuffix mat-icon-button aria-label="Clear" (click)="knowledgeBranchControl.reset('')">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
   </div>
 

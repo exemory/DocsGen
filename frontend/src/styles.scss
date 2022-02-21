@@ -63,9 +63,17 @@ body {
   width: 100%;
   position: relative;
 
-  input, mat-select {
+  button {
+    position: absolute;
+    top: -4px;
+    right: 1px;
+    font-size: 21px;
+    color: #727272;
+  }
+
+  input {
     width: 100%;
-    padding: 10px;
+    padding: 10px 40px 10px 10px;
     background: #f9faff;
     outline: none;
     border: none;
@@ -77,8 +85,12 @@ body {
       outline: 1px solid #dedee8;
     }
   }
-
-  mat-select {
-    padding: 8px;
-  }
 }
+
+mat-option.mat-option{
+  position: relative;
+  height: 38px!important;
+  line-height: 38px!important;
+  max-height: 38px!important;
+}
+

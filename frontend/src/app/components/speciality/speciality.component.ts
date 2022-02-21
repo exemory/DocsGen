@@ -13,6 +13,8 @@ import {
 import {Specialty} from "../../shared/interfaces/specialty";
 import {FormControl} from "@angular/forms";
 import {KnowledgeBranch} from "../../shared/interfaces/knowledge-branch";
+import {Teacher} from "../../shared/interfaces/teacher";
+import {map, Observable, startWith} from "rxjs";
 
 
 @Component({
@@ -22,9 +24,9 @@ import {KnowledgeBranch} from "../../shared/interfaces/knowledge-branch";
 })
 export class SpecialityComponent implements OnInit {
   isLoading = true;
-  selectedBranch = new FormControl();
   knowledgeBranches: KnowledgeBranch[] = [];
-
+  knowledgeBranchControl: FormControl = new FormControl();
+  filteredKnowledgeBranches: Observable<KnowledgeBranch[]> | any;
 
   constructor(private router: Router, public dialog: MatDialog,
               private http: HttpService, private toastr: ToastrService) {
@@ -46,16 +48,35 @@ export class SpecialityComponent implements OnInit {
       complete: () => this.isLoading = false
     })
 
-    this.http.get('knowledge-branches').subscribe(data => this.knowledgeBranches = data);
+    this.http.get('knowledge-branches').subscribe({
+      next: data => this.knowledgeBranches = data,
+      complete: () => {
+        this.filteredKnowledgeBranches = this.knowledgeBranchControl.valueChanges.pipe(
+          startWith(''),
+          map(value => (typeof value === 'string' ? value : value.name)),
+          map(name => (name ? this._filter(name) : this.knowledgeBranches.slice())),
+        );
+      }
+    });
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
-  onSelect(): any {
-    if(this.selectedBranch.value) {
-      this.http.get(`specialties?branch-id=${this.selectedBranch.value}`).subscribe({
+  private _filter(value: string): KnowledgeBranch[] {
+    const filterValue = value.toLowerCase();
+    return this.knowledgeBranches.filter(option => option.name.toLowerCase().includes(filterValue) ||
+      String(option.code).toLowerCase().includes(filterValue));
+  }
+
+  displayFn(branch: KnowledgeBranch): string {
+    return branch ? `${branch.code} ${branch.name}` : '';
+  }
+
+  onSelect(value: KnowledgeBranch): void {
+    if (value) {
+      this.http.get(`specialties?branch-id=${value.id}`).subscribe({
         next: (data: Specialty[]) => this.dataSource.data = data,
         error: err => this.toastr.error(err.message),
         complete: () => this.isLoading = false
