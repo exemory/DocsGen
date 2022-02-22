@@ -88,6 +88,11 @@ namespace Infrastructure
             }
         }
 
+        public void Rollback()
+        {
+            _context.ChangeTracker.Clear();
+        }
+
         public void Dispose()
         {
             _context.Dispose();

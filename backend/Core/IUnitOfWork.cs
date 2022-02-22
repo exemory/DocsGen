@@ -27,5 +27,7 @@ namespace Core
             where TEntity : Entity, new();
 
         public Task Save();
+
+        public void Rollback();
     }
 }
