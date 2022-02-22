@@ -7,12 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-      <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.2\Microsoft.AspNetCore.Http.Features.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Hosting.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-      <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.2\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.14" />
   </ItemGroup>
 
 </Project>
