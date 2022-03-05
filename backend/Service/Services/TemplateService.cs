@@ -6,6 +6,7 @@ using Core.Exceptions;
 using Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Service.Models;
 
 namespace Service.Services
 {
@@ -13,7 +14,7 @@ namespace Service.Services
     {
         private readonly IConfiguration _config;
 
-        private string _validExtension => _config["Template:ValidExtension"];
+        private string ValidExtension => _config["Template:ValidExtension"];
 
         public TemplateService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration config)
             : base(unitOfWork, mapper)
@@ -21,7 +22,7 @@ namespace Service.Services
             _config = config;
         }
 
-        public async Task<TemplateDTO> SaveTemplate(IFormFile file)
+        public async Task<TemplateDTO> Save(IFormFile file)
         {
             var fileExtension = Path.GetExtension(file.FileName);
 
@@ -30,9 +31,9 @@ namespace Service.Services
                 throw new TemplateException("File is empty");
             }
 
-            if (fileExtension != _validExtension)
+            if (fileExtension != ValidExtension)
             {
-                throw new TemplateException($"File extension must be '{_validExtension}'");
+                throw new TemplateException($"File extension must be '{ValidExtension}'");
             }
 
             Template template;
@@ -41,6 +42,8 @@ namespace Service.Services
             {
                 await file.CopyToAsync(stream);
 
+                WordTemplate.CheckTemplateFile(stream);
+
                 template = new Template
                 {
                     UploadDate = DateTime.UtcNow,
@@ -48,8 +51,8 @@ namespace Service.Services
                 };
             }
 
-            _unitOfWork.Templates.Add(template);
-            await _unitOfWork.Save();
+            UnitOfWork.Templates.Add(template);
+            await UnitOfWork.Save();
 
             var dto = MapToDTO(template);
             return dto;

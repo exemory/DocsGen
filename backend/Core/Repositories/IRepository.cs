@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.Repositories
 {
@@ -7,6 +8,8 @@ namespace Core.Repositories
         Task<T> GetById(int entityId);
 
         Task<IEnumerable<T>> GetAll();
+        
+        DbSet<T> Get();
 
         void Add(T entity);
 
@@ -15,6 +18,10 @@ namespace Core.Repositories
         void Delete(int entityId);
 
         void Delete(T entity);
+        
+        void DeleteRange(IEnumerable<int> entityIds);
+
+        void DeleteRange(IEnumerable<T> entities);
 
         Task<bool> Exists(int entityId);
 

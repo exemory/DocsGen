@@ -1,27 +1,28 @@
-﻿using Core.Entities.Base;
+﻿using Core.Entities;
+using Core.Entities.Base;
 using Core.Repositories;
 
 namespace Core
 {
     public interface IUnitOfWork : IDisposable
     {
-        public ITeacherRepository Teachers { get; }
+        public IRepository<Teacher> Teachers { get; }
 
-        public IHeadOfSmcRepository HeadsOfSmc { get; }
+        public IRepository<HeadOfSmc> HeadsOfSmc { get; }
 
-        public IGuarantorRepository Guarantors { get; }
+        public IRepository<Guarantor> Guarantors { get; }
 
-        public IKnowledgeBranchRepository KnowledgeBranches { get; }
+        public IRepository<KnowledgeBranch> KnowledgeBranches { get; }
 
-        public ISpecialtyRepository Specialties { get; }
+        public IRepository<Specialty> Specialties { get; }
 
-        public ISubjectRepository Subjects { get; }
+        public IRepository<Subject> Subjects { get; }
 
-        public ISyllabusRepository Syllabuses { get; }
+        public IRepository<Syllabus> Syllabuses { get; }
 
-        public ITeacherLoadRepository TeacherLoads { get; }
+        public IRepository<TeacherLoad> TeacherLoads { get; }
 
-        public ITemplateRepository Templates { get; }
+        public IRepository<Template> Templates { get; }
 
         public IRepository<TEntity> Repository<TEntity>()
             where TEntity : Entity, new();

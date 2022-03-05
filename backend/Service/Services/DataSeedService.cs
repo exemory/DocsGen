@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Enums;
 using Core.Services;
 using Infrastructure;
 
@@ -114,22 +115,22 @@ namespace Service.Services
 
             TeacherLoad[] loads =
             {
-                new TeacherLoad { Type = 2, Year = 2, Teacher = teachers[2], Subject = subjects[3], Specialty = specs[10], Syllabus = syllabuses[2] },
-                new TeacherLoad { Type = 1, Year = 6, Teacher = teachers[0], Subject = subjects[1], Specialty = specs[6], Syllabus = syllabuses[4] },
-                new TeacherLoad { Type = 1, Year = 3, Teacher = teachers[2], Subject = subjects[2], Specialty = specs[3], Syllabus = syllabuses[1] },
-                new TeacherLoad { Type = 2, Year = 4, Teacher = teachers[3], Subject = subjects[6], Specialty = specs[0], Syllabus = syllabuses[3] },
-                new TeacherLoad { Type = 1, Year = 1, Teacher = teachers[1], Subject = subjects[4], Specialty = specs[8], Syllabus = syllabuses[3] },
-                new TeacherLoad { Type = 1, Year = 3, Teacher = teachers[3], Subject = subjects[0], Specialty = specs[5], Syllabus = syllabuses[0] },
-                new TeacherLoad { Type = 2, Year = 2, Teacher = teachers[0], Subject = subjects[3], Specialty = specs[7], Syllabus = syllabuses[4] },
-                new TeacherLoad { Type = 1, Year = 5, Teacher = teachers[1], Subject = subjects[0], Specialty = specs[9], Syllabus = syllabuses[5] },
-                new TeacherLoad { Type = 1, Year = 3, Teacher = teachers[3], Subject = subjects[5], Specialty = specs[4], Syllabus = syllabuses[3] },
-                new TeacherLoad { Type = 1, Year = 2, Teacher = teachers[2], Subject = subjects[0], Specialty = specs[7], Syllabus = syllabuses[2] },
-                new TeacherLoad { Type = 2, Year = 6, Teacher = teachers[1], Subject = subjects[5], Specialty = specs[6], Syllabus = syllabuses[5] },
-                new TeacherLoad { Type = 1, Year = 6, Teacher = teachers[2], Subject = subjects[2], Specialty = specs[7], Syllabus = syllabuses[0] },
-                new TeacherLoad { Type = 2, Year = 5, Teacher = teachers[1], Subject = subjects[1], Specialty = specs[7], Syllabus = syllabuses[1] },
-                new TeacherLoad { Type = 2, Year = 4, Teacher = teachers[3], Subject = subjects[6], Specialty = specs[1], Syllabus = syllabuses[4] },
-                new TeacherLoad { Type = 1, Year = 5, Teacher = teachers[0], Subject = subjects[1], Specialty = specs[8], Syllabus = syllabuses[1] },
-                new TeacherLoad { Type = 2, Year = 1, Teacher = teachers[1], Subject = subjects[4], Specialty = specs[10], Syllabus = syllabuses[0] }
+                new TeacherLoad { Type = TeacherLoadType.Practice, Year = 2, Teacher = teachers[2], Subject = subjects[3], Specialty = specs[10], Syllabus = syllabuses[2] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 6, Teacher = teachers[0], Subject = subjects[1], Specialty = specs[6], Syllabus = syllabuses[4] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 3, Teacher = teachers[2], Subject = subjects[2], Specialty = specs[3], Syllabus = syllabuses[1] },
+                new TeacherLoad { Type = TeacherLoadType.Practice, Year = 4, Teacher = teachers[3], Subject = subjects[6], Specialty = specs[0], Syllabus = syllabuses[3] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 1, Teacher = teachers[1], Subject = subjects[4], Specialty = specs[8], Syllabus = syllabuses[3] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 3, Teacher = teachers[3], Subject = subjects[0], Specialty = specs[5], Syllabus = syllabuses[0] },
+                new TeacherLoad { Type = TeacherLoadType.Practice, Year = 2, Teacher = teachers[0], Subject = subjects[3], Specialty = specs[7], Syllabus = syllabuses[4] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 5, Teacher = teachers[1], Subject = subjects[0], Specialty = specs[9], Syllabus = syllabuses[5] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 3, Teacher = teachers[3], Subject = subjects[5], Specialty = specs[4], Syllabus = syllabuses[3] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 2, Teacher = teachers[2], Subject = subjects[0], Specialty = specs[7], Syllabus = syllabuses[2] },
+                new TeacherLoad { Type = TeacherLoadType.Practice, Year = 6, Teacher = teachers[1], Subject = subjects[5], Specialty = specs[6], Syllabus = syllabuses[5] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 6, Teacher = teachers[2], Subject = subjects[2], Specialty = specs[7], Syllabus = syllabuses[0] },
+                new TeacherLoad { Type = TeacherLoadType.Practice, Year = 5, Teacher = teachers[1], Subject = subjects[1], Specialty = specs[7], Syllabus = syllabuses[1] },
+                new TeacherLoad { Type = TeacherLoadType.Practice, Year = 4, Teacher = teachers[3], Subject = subjects[6], Specialty = specs[1], Syllabus = syllabuses[4] },
+                new TeacherLoad { Type = TeacherLoadType.Lecture, Year = 5, Teacher = teachers[0], Subject = subjects[1], Specialty = specs[8], Syllabus = syllabuses[1] },
+                new TeacherLoad { Type = TeacherLoadType.Practice, Year = 1, Teacher = teachers[1], Subject = subjects[4], Specialty = specs[10], Syllabus = syllabuses[0] }
             };
 
             _context.TeacherLoads.AddRange(loads);

@@ -5,6 +5,6 @@ namespace Core.Services
 {
     public interface ITemplateService
     {
-        Task<TemplateDTO> SaveTemplate(IFormFile file);
+        Task<TemplateDTO> Save(IFormFile file);
     }
 }

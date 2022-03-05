@@ -6,6 +6,7 @@ using Core.Repositories;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
+using Core.Enums;
 
 namespace Infrastructure
 {
@@ -15,37 +16,37 @@ namespace Infrastructure
 
         private readonly Dictionary<Type, dynamic> _repositories = new();
 
-        public ITeacherRepository Teachers => _repositories[typeof(Specialty)];
+        public IRepository<Teacher> Teachers => _repositories[typeof(Teacher)];
 
-        public IHeadOfSmcRepository HeadsOfSmc => _repositories[typeof(Specialty)];
+        public IRepository<HeadOfSmc> HeadsOfSmc => _repositories[typeof(HeadOfSmc)];
 
-        public IGuarantorRepository Guarantors => _repositories[typeof(Specialty)];
+        public IRepository<Guarantor> Guarantors => _repositories[typeof(Guarantor)];
 
-        public IKnowledgeBranchRepository KnowledgeBranches => _repositories[typeof(Specialty)];
+        public IRepository<KnowledgeBranch> KnowledgeBranches => _repositories[typeof(KnowledgeBranch)];
 
-        public ISpecialtyRepository Specialties => _repositories[typeof(Specialty)];
+        public IRepository<Specialty> Specialties => _repositories[typeof(Specialty)];
 
-        public ISubjectRepository Subjects => _repositories[typeof(Specialty)];
+        public IRepository<Subject> Subjects => _repositories[typeof(Subject)];
 
-        public ISyllabusRepository Syllabuses => _repositories[typeof(Specialty)];
+        public IRepository<Syllabus> Syllabuses => _repositories[typeof(Syllabus)];
 
-        public ITeacherLoadRepository TeacherLoads => _repositories[typeof(Specialty)];
+        public IRepository<TeacherLoad> TeacherLoads => _repositories[typeof(TeacherLoad)];
 
-        public ITemplateRepository Templates => _repositories[typeof(Template)];
+        public IRepository<Template> Templates => _repositories[typeof(Template)];
 
         public UnitOfWork(UniversityContext context)
         {
             _context = context;
 
-            _repositories[typeof(Teacher)] = new TeacherRepository(_context);
-            _repositories[typeof(HeadOfSmc)] = new HeadOfSmcRepository(_context);
-            _repositories[typeof(Guarantor)] = new GuarantorRepository(_context);
-            _repositories[typeof(KnowledgeBranch)] = new KnowledgeBranchRepository(_context);
-            _repositories[typeof(Specialty)] = new SpecialtyRepository(_context);
-            _repositories[typeof(Subject)] = new SubjectRepository(_context);
-            _repositories[typeof(Syllabus)] = new SyllabusRepository(_context);
-            _repositories[typeof(TeacherLoad)] = new TeacherLoadRepository(_context);
-            _repositories[typeof(Template)] = new TemplateRepository(_context);
+            _repositories[typeof(Teacher)] = new Repository<Teacher>(_context);
+            _repositories[typeof(HeadOfSmc)] = new Repository<HeadOfSmc>(_context);
+            _repositories[typeof(Guarantor)] = new Repository<Guarantor>(_context);
+            _repositories[typeof(KnowledgeBranch)] = new Repository<KnowledgeBranch>(_context);
+            _repositories[typeof(Specialty)] = new Repository<Specialty>(_context);
+            _repositories[typeof(Subject)] = new Repository<Subject>(_context);
+            _repositories[typeof(Syllabus)] = new Repository<Syllabus>(_context);
+            _repositories[typeof(TeacherLoad)] = new Repository<TeacherLoad>(_context);
+            _repositories[typeof(Template)] = new Repository<Template>(_context);
         }
 
         public IRepository<TEntity> Repository<TEntity>()

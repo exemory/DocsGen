@@ -57,7 +57,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guarantors");
+                    b.ToTable("Guarantors", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.HeadOfSmc", b =>
@@ -95,7 +95,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HeadsOfSmc");
+                    b.ToTable("HeadsOfSmc", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.KnowledgeBranch", b =>
@@ -119,7 +119,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("KnowledgeBranches");
+                    b.ToTable("KnowledgeBranches", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Specialty", b =>
@@ -159,7 +159,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("KnowledgeBranchId");
 
-                    b.ToTable("Specialties");
+                    b.ToTable("Specialties", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Subject", b =>
@@ -179,7 +179,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Subjects");
+                    b.ToTable("Subjects", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Syllabus", b =>
@@ -228,7 +228,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Syllabuses");
+                    b.ToTable("Syllabuses", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Teacher", b =>
@@ -266,7 +266,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.TeacherLoad", b =>
@@ -308,7 +308,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Type", "Year", "TeacherId", "SubjectId", "SpecialtyId")
                         .IsUnique();
 
-                    b.ToTable("TeacherLoads");
+                    b.ToTable("TeacherLoads", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Template", b =>
@@ -328,7 +328,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Templates");
+                    b.ToTable("Templates", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Specialty", b =>

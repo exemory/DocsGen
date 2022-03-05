@@ -12,6 +12,7 @@ using Service;
 using Service.Services;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 using Web.Conventions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -107,6 +108,7 @@ builder.Services.AddScoped<ISyllabusService, SyllabusService>();
 builder.Services.AddScoped<ITeacherLoadService, TeacherLoadService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<ITemplateService, TemplateService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
 
 builder.Services.AddHostedService<CleanupTemplateService>();
 
@@ -125,11 +127,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     };
 });
 
-builder.Services.AddControllers(options =>
-{
-    options.Conventions.Add(new ControllerDocumentationConvention());
-    options.Conventions.Add(new RouteTokenTransformerConvention(new RouteParameterTransformer()));
-});
+builder.Services
+    .AddControllers(options => {
+        options.Conventions.Add(new ControllerDocumentationConvention());
+        options.Conventions.Add(new RouteTokenTransformerConvention(new RouteParameterTransformer()));
+    })
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 var app = builder.Build();
 
@@ -155,7 +158,9 @@ app.UseWhen(
     {
         config.UseRouting();
         config.UseAuthentication();
+#pragma warning disable ASP0001
         config.UseAuthorization();
+#pragma warning restore ASP0001
         config.UseEndpoints(
             endpoints =>
             {

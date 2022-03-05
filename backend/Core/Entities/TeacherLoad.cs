@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Core.Entities.Base;
+using Core.Enums;
 
 namespace Core.Entities
 {
     public class TeacherLoad : Entity
     {
         [Required]
-        [Range(1, 2)]
-        public byte Type { get; set; } // 1 - lection, 2 - practice
+        public TeacherLoadType Type { get; set; }
 
         [Required]
         [Range(1, 6)]

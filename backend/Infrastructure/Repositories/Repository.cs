@@ -7,18 +7,18 @@ namespace Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : Entity, new()
     {
-        protected readonly UniversityContext _context;
-        protected readonly DbSet<T> _set;
+        protected readonly UniversityContext Context;
+        protected readonly DbSet<T> Set;
 
         public Repository(UniversityContext context)
         {
-            _context = context;
-            _set = _context.Set<T>();
+            Context = context;
+            Set = Context.Set<T>();
         }
 
         public async Task<T> GetById(int entityId)
         {
-            var entity = await _set.FindAsync(entityId);
+            var entity = await Set.FindAsync(entityId);
 
             if (entity == null)
             {
@@ -30,19 +30,24 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            var entities = await _set.ToListAsync();
+            var entities = await Set.ToListAsync();
 
             return entities;
         }
 
+        public DbSet<T> Get()
+        {
+            return Set;
+        }
+
         public void Add(T entity)
         {
-            _set.Add(entity);
+            Set.Add(entity);
         }
 
         public void Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete(int entityId)
@@ -52,12 +57,22 @@ namespace Infrastructure.Repositories
 
         public void Delete(T entity)
         {
-            _set.Remove(entity);
+            Set.Remove(entity);
+        }
+        
+        public void DeleteRange(IEnumerable<int> entityIds)
+        {
+            DeleteRange(entityIds.Select(id => new T {Id = id}));
+        }
+
+        public void DeleteRange(IEnumerable<T> entities)
+        {
+            Set.RemoveRange(entities);
         }
 
         public async Task<bool> Exists(int entityId)
         {
-            var exists = await _set.AnyAsync(entity => entity.Id == entityId);
+            var exists = await Set.AnyAsync(entity => entity.Id == entityId);
 
             return exists;
         }

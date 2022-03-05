@@ -1,4 +1,5 @@
 ﻿using Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,16 +23,25 @@ namespace Service.Services
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(Cleanup, null, TimeSpan.Zero, _period);
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, _period);
             return Task.CompletedTask;
         }
 
-        private async void Cleanup(object? state)
+        private async void DoWork(object? state)
         {
             using var scope = _scopeFactory.CreateScope();
             var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
             
-            await unitOfWork.Templates.DeleteOutdated(Lifetime);
+            var currentDate = DateTime.UtcNow;
+
+            var outdatedTemplatesIds =  await unitOfWork.Templates
+                .Get()
+                .Where(t => currentDate - t.UploadDate > Lifetime)
+                .Select(t => t.Id)
+                .ToListAsync();
+
+            unitOfWork.Templates.DeleteRange(outdatedTemplatesIds);
+            
             await unitOfWork.Save();
         }
 
