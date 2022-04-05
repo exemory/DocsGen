@@ -3,8 +3,9 @@ import {HttpService} from "../../shared/services/http.service";
 import {Teacher} from "../../shared/interfaces/teacher";
 import {ToastrService} from "ngx-toastr";
 import {FormControl} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
-import {HttpEventType, HttpResponse} from "@angular/common/http";
+import {concatMap, map, Observable, startWith} from "rxjs";
+import {HttpEventType, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {saveAs} from "file-saver";
 
 @Component({
   selector: 'app-main',
@@ -103,8 +104,32 @@ export class MainComponent implements OnInit {
   }
 
   generate() {
+    console.log(this.teacherControl)
     if (this.file) {
-      console.log('File id', this.fileId)
+
+      const options = {
+        responseType: 'blob',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      }
+
+      if (this.teacherControl.status === 'DISABLED') {
+        const teachersID = this.teachers.map(t => t.id);
+        this.http.postWithCustomOptions('documents/generate/curricula', {
+          "templateId": this.fileId,
+          "teacherIds": teachersID
+        }, options).subscribe(blob => {
+          saveAs(blob, 'документи.zip');
+        });
+      } else {
+        this.http.postWithCustomOptions('documents/generate/curricula', {
+          "templateId": this.fileId,
+          "teacherIds": [this.teacherControl.value.id]
+        }, options).subscribe(blob => {
+          saveAs(blob, 'документи.zip');
+        });
+      }
     }
   }
 }

@@ -31,7 +31,7 @@
         <!-- type Column -->
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Тип</th>
-          <td mat-cell *matCellDef="let element">{{element.type === 1 ? 'лекція' : 'практика'}}</td>
+          <td mat-cell *matCellDef="let element">{{element.type === 'Lecture' ? 'лекція' : 'практика'}}</td>
         </ng-container>
         <!-- year Column -->
         <ng-container matColumnDef="year">
