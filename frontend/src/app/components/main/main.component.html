@@ -31,26 +31,46 @@
     <div class="settings">
       <!-- Slide-toggle -->
       <mat-slide-toggle color="primary"
-                        [checked]="teacherControl.disabled"
-                        (change)="teacherControl.disabled ? teacherControl.enable() : teacherControl.disable()">
+                        [checked]="selectAll"
+                        (change)="selectAll = !selectAll">
         Генерувати для всіх викладачів
       </mat-slide-toggle>
       <!-- Autocomplete -->
-      <mat-form-field appearance="outline">
-        <mat-label>Обрати викладача</mat-label>
-        <input type="text"
-               placeholder="Оберіть викладача"
-               matInput
-               [formControl]="teacherControl"
-               [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngFor="let teacher of filteredTeachers | async" [value]="teacher">
-            {{teacher.surname}} {{teacher.name}} {{teacher.patronymic}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+      <div class="teacher-selection">
+
+
+        <mat-form-field>
+          <mat-chip-list #chipList>
+            <ng-container *ngFor="let select of selectData">
+              <mat-chip class="cardinal-colors" (click)="removeChip(select)">
+                {{ select.surname }}
+                <mat-icon class="mat-chip-remove">cancel</mat-icon>
+              </mat-chip>
+            </ng-container>
+
+            <input matInput type="text" [disabled]="selectAll"
+                   placeholder="Оберіть викладача/викладачів"
+                   [matAutocomplete]="auto"
+                   [matChipInputFor]="chipList"
+                   [formControl]="teacherControl">
+          </mat-chip-list>
+
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let teacher of filteredTeachers | async">
+              <div (click)="optionClicked($event, teacher)">
+                <mat-checkbox [checked]="teacher.selected"
+                              (change)="toggleSelection(teacher)"
+                              (click)="$event.stopPropagation()">
+                  {{teacher.surname}} {{teacher.name}} {{teacher.patronymic}}
+                </mat-checkbox>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
       <!-- Button -->
-      <button mat-raised-button color="primary" (click)="generate()">Генерувати</button>
+      <button mat-raised-button color="primary" [disabled]="file === undefined" (click)="generate()">Генерувати</button>
     </div>
   </div>
 </div>

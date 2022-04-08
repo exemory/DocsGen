@@ -1,11 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpService} from "../../shared/services/http.service";
 import {Teacher} from "../../shared/interfaces/teacher";
 import {ToastrService} from "ngx-toastr";
 import {FormControl} from "@angular/forms";
-import {concatMap, map, Observable, startWith} from "rxjs";
+import {map, Observable, startWith} from "rxjs";
 import {HttpEventType, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {saveAs} from "file-saver";
+
 
 @Component({
   selector: 'app-main',
@@ -20,13 +21,21 @@ export class MainComponent implements OnInit {
   teacherControl: FormControl = new FormControl();
   filteredTeachers: Observable<Teacher[]> | any;
   fileId: number | undefined;
+  selectData: Teacher[] = [];
+  selectAll: boolean = false;
 
   constructor(private http: HttpService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
-    this.http.get('teachers').subscribe({
-      next: data => this.teachers = data,
+    this.http.get('teachers').pipe(map(data => {
+      return data.map((t: Teacher) => {
+        return {...t, selected: false}
+      })
+    })).subscribe({
+      next: data => {
+        this.teachers = data
+      },
       error: err => this.toastr.error(err.message),
       complete: () => {
         this.filteredTeachers = this.teacherControl.valueChanges.pipe(
@@ -104,9 +113,7 @@ export class MainComponent implements OnInit {
   }
 
   generate() {
-    console.log(this.teacherControl)
     if (this.file) {
-
       const options = {
         responseType: 'blob',
         headers: new HttpHeaders({
@@ -114,7 +121,7 @@ export class MainComponent implements OnInit {
         })
       }
 
-      if (this.teacherControl.status === 'DISABLED') {
+      if (this.selectAll) {
         const teachersID = this.teachers.map(t => t.id);
         this.http.postWithCustomOptions('documents/generate/curricula', {
           "templateId": this.fileId,
@@ -123,13 +130,35 @@ export class MainComponent implements OnInit {
           saveAs(blob, 'документи.zip');
         });
       } else {
+        const teachersID = this.selectData.map(t => t.id);
         this.http.postWithCustomOptions('documents/generate/curricula', {
           "templateId": this.fileId,
-          "teacherIds": [this.teacherControl.value.id]
+          "teacherIds": teachersID
         }, options).subscribe(blob => {
           saveAs(blob, 'документи.zip');
         });
       }
     }
   }
+
+  // Teacher selection
+  optionClicked = (event: Event, data: Teacher): void => {
+    event.stopPropagation();
+    this.toggleSelection(data);
+  };
+
+  toggleSelection = (teacher: Teacher): void => {
+    teacher.selected = !teacher.selected;
+
+    if (teacher.selected) {
+      this.selectData.push(teacher);
+    } else {
+      const i = this.selectData.findIndex(value => value.id === teacher.id);
+      this.selectData.splice(i, 1);
+    }
+  };
+
+  removeChip = (data: Teacher): void => {
+    this.toggleSelection(data);
+  };
 }

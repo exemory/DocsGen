@@ -31,7 +31,7 @@ import {GuarantorAddEditComponent} from './components/guarantor/guarantor-add-ed
 import {SubjectAddEditComponent} from './components/subject/subject-add-edit/subject-add-edit.component';
 import {SyllabusAddEditComponent} from './components/syllabus/syllabus-add-edit/syllabus-add-edit.component';
 import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edit.component';
-import { DndDirective } from './shared/directives/dnd.directive';
+import {DndDirective} from './shared/directives/dnd.directive';
 
 
 @NgModule({

@@ -7,4 +7,5 @@ export interface Teacher {
   academicRank: string;
   email: string;
   phone: string;
+  selected?: boolean;
 }
