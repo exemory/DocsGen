@@ -56,21 +56,23 @@
           </mat-chip-list>
 
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let teacher of filteredTeachers | async">
-              <div (click)="optionClicked($event, teacher)">
-                <mat-checkbox [checked]="teacher.selected"
-                              (change)="toggleSelection(teacher)"
-                              (click)="$event.stopPropagation()">
-                  {{teacher.surname}} {{teacher.name}} {{teacher.patronymic}}
-                </mat-checkbox>
-              </div>
+            <mat-option *ngFor="let teacher of filteredTeachers | async" (click)="optionClicked($event, teacher)">
+              <mat-checkbox [checked]="teacher.selected"
+                            (change)="toggleSelection(teacher)"
+                            (click)="$event.stopPropagation()">
+                {{teacher.surname}} {{teacher.name}} {{teacher.patronymic}}
+              </mat-checkbox>
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
       </div>
 
       <!-- Button -->
-      <button mat-raised-button color="primary" [disabled]="file === undefined" (click)="generate()">Генерувати</button>
+      <button mat-raised-button color="primary"
+              [disabled]="file === undefined || (!selectAll && selectData.length === 0)"
+              (click)="generate()">
+        Генерувати
+      </button>
     </div>
   </div>
 </div>

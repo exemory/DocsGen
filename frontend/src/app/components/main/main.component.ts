@@ -45,6 +45,8 @@ export class MainComponent implements OnInit {
         );
       }
     })
+
+    console.log('Selected data', this.selectData)
   }
 
   private _filter(value: string): Teacher[] {

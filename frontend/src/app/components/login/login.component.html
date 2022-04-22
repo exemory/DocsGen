@@ -3,8 +3,10 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Введіть пароль</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" [formControl]="password">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Приховати пароль'" [attr.aria-pressed]="hide">
+    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" [formControl]="password"
+           (keyup.enter)="onLogin()">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Приховати пароль'"
+            [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
