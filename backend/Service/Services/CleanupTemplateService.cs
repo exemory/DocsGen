@@ -10,7 +10,7 @@ namespace Service.Services
     {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IConfiguration _config;
-        private readonly TimeSpan _period = new(6, 0, 0);
+        private readonly TimeSpan _period = TimeSpan.Parse("06:00");
         
         private Timer _timer = null!;
         private TimeSpan Lifetime => _config.GetValue<TimeSpan>("Template:Lifetime");
