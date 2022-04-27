@@ -32,6 +32,8 @@ import {SubjectAddEditComponent} from './components/subject/subject-add-edit/sub
 import {SyllabusAddEditComponent} from './components/syllabus/syllabus-add-edit/syllabus-add-edit.component';
 import {LoadAddEditComponent} from './components/load/load-add-edit/load-add-edit.component';
 import {DndDirective} from './shared/directives/dnd.directive';
+import {Router} from "@angular/router";
+import {AuthInterceptorService} from "./shared/helpers/auth-interceptor.service";
 
 
 @NgModule({
@@ -73,6 +75,7 @@ import {DndDirective} from './shared/directives/dnd.directive';
     FormsModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: MatPaginatorIntl, useValue: getUkranianPaginatorIntl()},
   ],
